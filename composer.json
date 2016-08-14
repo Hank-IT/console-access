@@ -1,0 +1,12 @@
+{
+    "name": "mrcrankhank/console-access",
+    "authors": [
+        {
+            "name": "MrCrankHank",
+            "email": "mail@alexander-hank.de"
+        }
+    ],
+    "require": {
+        "laravelcollective/remote": "5.2.*"
+    }
+}
