@@ -2,6 +2,7 @@
     "name": "mrcrankhank/console-access",
     "type": "library",
     "description": "This library abstracts the access to a console through adapters.",
+    "license": "Apache License 2.0",
     "authors": [
         {
             "name": "MrCrankHank",
