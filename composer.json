@@ -7,6 +7,6 @@
         }
     ],
     "require": {
-        "laravelcollective/remote": "5.2.*"
+        "phpseclib/phpseclib": "^2.0"
     }
 }
