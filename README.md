@@ -7,7 +7,7 @@
 ### Description
 This library abstracts the access to a console through adapters. It provides a local and ssh adapter out of the box.
 
-### Api documentation
+### Examples & documentation
 https://mrcrankhank.github.io/console-access/
 
 ### Packagist
