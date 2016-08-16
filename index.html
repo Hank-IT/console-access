@@ -1,291 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <meta charset="utf-8"/>
-    <title>API Documentation</title>
-    <meta name="author" content=""/>
-    <meta name="description" content=""/>
 
-    <link href="css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/prism.css" rel="stylesheet" media="all"/>
-    <link href="css/template.css" rel="stylesheet" media="all"/>
-    
-    <!--[if lt IE 9]>
-    <script src="js/html5.js"></script>
-    <![endif]-->
-    <script src="js/jquery-1.11.0.min.js"></script>
-    <script src="js/ui/1.10.4/jquery-ui.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.smooth-scroll.js"></script>
-    <script src="js/prism.min.js"></script>
-    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
-    
-    <link rel="shortcut icon" href="images/favicon.ico"/>
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png"/>
-    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png"/>
-    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png"/>
-</head>
-<body>
+    <meta charset="UTF-8">
+    <title>console-access</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/cayman.css">
 
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <i class="icon-ellipsis-vertical"></i>
-            </a>
-            <a class="brand" href="index.html">API Documentation</a>
-
-            <div class="nav-collapse">
-                <ul class="nav pull-right">
-                                        <li class="dropdown">
-                        <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">
-                            API Documentation <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                                                        <li><a href="namespaces/MrCrankHank.html">\MrCrankHank</a></li>
-                                                    </ul>
-                    </li>
-                                        <li class="dropdown" id="charts-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Charts <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="graphs/class.html">
-                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown" id="reports-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Reports <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">19</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="reports/deprecated.html">
-                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
+<section class="page-header">
+    <h1 class="project-name">console-access</h1>
+    <h2 class="project-tagline">A library written in php, which abstracts the access to a console via adapters.</h2>
+    <a href="https://github.com/MrCrankHank/console-access" class="btn">View on GitHub</a>
+    <a href="https://github.com/MrCrankHank/console-access/archive/master.zip" class="btn">Download .zip</a>
+    <a href="https://github.com/MrCrankHank/console-access/archive/master.tar.gz" class="btn">Download .tar.gz</a>
+    <div style="text-align: center; padding-top: 15px;">
+        <iframe src="https://ghbtns.com/github-btn.html?user=mrcrankhank&repo=console-access&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="https://ghbtns.com/github-btn.html?user=mrcrankhank&repo=console-access&type=fork&count=true&size=large" frameborder="0" scrolling="0" width="158px" height="30px"></iframe>
+        <iframe src="https://ghbtns.com/github-btn.html?user=mrcrankhank&repo=console-access&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="https://ghbtns.com/github-btn.html?user=mrcrankhank&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
     </div>
-    <!--<div class="go_to_top">-->
-    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
-    <!--</div>-->
-</div>
+</section>
 
-<div id="___" class="container-fluid">
-        <section class="row-fluid">
-        <div class="span2 sidebar">
-                                <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1104998350"></a>
-                                <a href="namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
-            </div>
-            <div id="namespace-1104998350" class="accordion-body collapse in">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1407175759"></a>
-                                <a href="namespaces/MrCrankHank.html" style="margin-left: 30px; padding-left: 0">MrCrankHank</a>
-            </div>
-            <div id="namespace-1407175759" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-500529220"></a>
-                                <a href="namespaces/MrCrankHank.ConsoleAccess.html" style="margin-left: 30px; padding-left: 0">ConsoleAccess</a>
-            </div>
-            <div id="namespace-500529220" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-728590964"></a>
-                                <a href="namespaces/MrCrankHank.ConsoleAccess.Adapters.html" style="margin-left: 30px; padding-left: 0">Adapters</a>
-            </div>
-            <div id="namespace-728590964" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="classes/MrCrankHank.ConsoleAccess.Adapters.DummyAdapter.html">DummyAdapter</a></li>
-                                                    <li class="class"><a href="classes/MrCrankHank.ConsoleAccess.Adapters.LocalAdapter.html">LocalAdapter</a></li>
-                                                    <li class="class"><a href="classes/MrCrankHank.ConsoleAccess.Adapters.SshAdapter.html">SshAdapter</a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
+<section class="main-content">
+    <div style="text-align: center">
+        <img src="https://poser.pugx.org/mrcrankhank/console-access/downloads" alt="Total downloads">
+        <img src="https://poser.pugx.org/mrcrankhank/console-access/v/stable" alt="Latest stable version">
+        <img src="https://poser.pugx.org/mrcrankhank/console-access/v/unstable" alt="Latest unstable version">
+        <img src="https://poser.pugx.org/mrcrankhank/console-access/license" alt="License">
     </div>
 
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2031366239"></a>
-                                <a href="namespaces/MrCrankHank.ConsoleAccess.Exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
-            </div>
-            <div id="namespace-2031366239" class="accordion-body collapse ">
-                <div class="accordion-inner">
+    <h1><a class="anchor" href="#header-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h1>
 
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="classes/MrCrankHank.ConsoleAccess.Exceptions.BaseException.html">BaseException</a></li>
-                                                    <li class="class"><a href="classes/MrCrankHank.ConsoleAccess.Exceptions.ConnectionNotPossibleException.html">ConnectionNotPossibleException</a></li>
-                                                    <li class="class"><a href="classes/MrCrankHank.ConsoleAccess.Exceptions.MissingCommandException.html">MissingCommandException</a></li>
-                                                    <li class="class"><a href="classes/MrCrankHank.ConsoleAccess.Exceptions.PublicKeyMismatchException.html">PublicKeyMismatchException</a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    <p>
+        This library abstracts, the access to a console via adapters. Out of the box there is a local and a ssh adapters
 
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-120155752"></a>
-                                <a href="namespaces/MrCrankHank.ConsoleAccess.Interfaces.html" style="margin-left: 30px; padding-left: 0">Interfaces</a>
-            </div>
-            <div id="namespace-120155752" class="accordion-body collapse ">
-                <div class="accordion-inner">
+        This adapters enable you to execute commands localy and remotely without having to do if checks and stuff.
+    </p>
 
-                    
-                    <ul>
-                                                    <li class="interface"><a href="classes/MrCrankHank.ConsoleAccess.Interfaces.AdapterInterface.html">AdapterInterface</a></li>
-                                                    <li class="interface"><a href="classes/MrCrankHank.ConsoleAccess.Interfaces.ConsoleAccessInterface.html">ConsoleAccessInterface</a></li>
-                                                                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1><a class="anchor" href="#header-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting started</h1>
+    <p>composer require mrcrankhank/console-access</p>
 
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="classes/MrCrankHank.ConsoleAccess.ConsoleAccess.html">ConsoleAccess</a></li>
-                                                    <li class="class"><a href="classes/MrCrankHank.ConsoleAccess.ConsoleAccessServiceProvider.html">ConsoleAccessServiceProvider</a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1><a class="anchor" href="#docs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h1>
+    You can find the api documentation, generated using <a href="https://www.phpdoc.org/">phpdoc</a>, here: <a href="docs/index.html">Link</a>
 
-                    
-                    <ul>
-                                                                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1><a class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h1>
+    <p>These examples assume, that you include the composer autoloader somewhere and that you pulled in the necessary classes via use at the top.</p>
 
-                    
-                    <ul>
-                                                                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h2><a class="anchor" href="#local" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local</h2>
 
-        </div>
-    </section>
-    <section class="row-fluid">
-        <div class="span10 offset2">
-            <div class="row-fluid">
-                <div class="span8 content namespace">
-                    <nav>
-                                                
-                                            </nav>
-                    <h1><small></small>\</h1>
+    <pre><code>// create a new adapter
+$adapter = new LocalAdapter;
 
-                                        <h2>Namespaces</h2>
-                    <table class="table table-hover">
-                                                    <tr>
-                                <td><a href="namespaces/MrCrankHank.html">MrCrankHank</a></td>
-                            </tr>
-                                            </table>
-                    
-                    
-                    
-                                    </div>
+// create a new console
+$console = new Console($adapter);
 
-                <aside class="span4 detailsbar">
-                    <dl>
-                        <dt>Namespace hierarchy</dt>
-                        <dd class="hierarchy">
-                                                                                                                                                <div class="namespace-wrapper">\</div>
-                        </dd>
-                    </dl>
-                </aside>
-            </div>
+// execute the command
+$console->command('pwd')->exec();
 
-            
-            
-        </div>
-    </section>
+// fetch output
+echo $console->getOutput();
 
-    <footer class="row-fluid">
-        <section class="span10 offset2">
-            <section class="row-fluid">
-                <section class="span10 offset1">
-                    <section class="row-fluid footer-sections">
-                        <section class="span4">
-                                                        <h1><i class="icon-code"></i></h1>
-                            <div>
-                                <ul>
-                                                                            <li><a href="namespaces/MrCrankHank.html">\MrCrankHank</a></li>
-                                                                    </ul>
-                            </div>
-                        </section>
-                        <section class="span4">
-                                                        <h1><i class="icon-bar-chart"></i></h1>
-                            <div>
-                                <ul>
-                                    <li><a href="graphs/class.html">Class Hierarchy Diagram</a></li>
-                                </ul>
-                            </div>
-                        </section>
-                        <section class="span4">
-                                                        <h1><i class="icon-pushpin"></i></h1>
-                            <div>
-                                <ul>
-                                    <li><a href="reports/errors.html">Errors</a></li>
-                                    <li><a href="reports/markers.html">Markers</a></li>
-                                </ul>
-                            </div>
-                        </section>
-                    </section>
-                </section>
-            </section>
-            <section class="row-fluid">
-                <section class="span10 offset1">
-                    <hr />
-                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on August 15th, 2016 at 14:15.
-                </section>
-            </section>
-        </section>
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
+    <h2><a class="anchor" href="#sshPw" aria-hidden="true"><span class="octicon octicon-link"></span></a>SSH with password</h2>
+
+    <pre><code>/*
+ * create a new adapter
+ * provide host, user and (for security reasons) the <strong>public</strong>
+ * <strong>key</strong> of the host (in debian: "/etc/ssh/ssh_host_rsa_key.pub")
+ */
+$adapter = new SshAdapter('127.0.0.1', 'user', 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZCcmN09Wa62slAy2ASo+/TVlYIb4GufKAV02hjrYhzxCkOdxJOqLmfjkenr+hKAtBf4bHvVFZGI3jd12rLSgMTG7h53Zumv5r4oIl+SBxB/+U2PEk8X5XEDRvR1eP5+3fdAB8w/Ds4KI7HGMG0IkSvP8Gqlsq6AE/t6rQI8ac52bWHkmBHa7Ebt3JIKbi6E0HdCq0Qy35GadVCaBJRW49oqxYL1hVrcifB4DscqarU35+zDO6UYPdiFgfgfIFTIcB9nPAwiOmHkg+4uJbonZyjGSr+phYj0BIQ4JIeuSjxOjkfZteC6ePuqjwZNUZVA+SMlm3+ahGSDq3sDwOhhK7');
+
+// login to the remote server
+$adapter->loginPassword('password');
+
+// create a new console
+$console = new Console($adapter);
+
+// execute the command
+$console->command('pwd')->exec();
+
+// fetch output
+echo $console->getOutput();
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
+    <h2><a class="anchor" href="#sshKey" aria-hidden="true"><span class="octicon octicon-link"></span></a>SSH with public key authentication</h2>
+
+    <pre><code>/*
+ * create a new adapter
+ * provide host, user and (for security reasons) the <strong>public</strong>
+ * <strong>key</strong> of the host (in debian: "/etc/ssh/ssh_host_rsa_key.pub")
+ */
+$adapter = new SshAdapter('127.0.0.1', 'user', 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZCcmN09Wa62slAy2ASo+/TVlYIb4GufKAV02hjrYhzxCkOdxJOqLmfjkenr+hKAtBf4bHvVFZGI3jd12rLSgMTG7h53Zumv5r4oIl+SBxB/+U2PEk8X5XEDRvR1eP5+3fdAB8w/Ds4KI7HGMG0IkSvP8Gqlsq6AE/t6rQI8ac52bWHkmBHa7Ebt3JIKbi6E0HdCq0Qy35GadVCaBJRW49oqxYL1hVrcifB4DscqarU35+zDO6UYPdiFgfgfIFTIcB9nPAwiOmHkg+4uJbonZyjGSr+phYj0BIQ4JIeuSjxOjkfZteC6ePuqjwZNUZVA+SMlm3+ahGSDq3sDwOhhK7');
+
+/*
+ * login to the remote server
+ * You can provide a path or the
+ * the content of the key.
+ *
+ * If your key is encrypted,
+ * you can provide a password
+ * after the key path/content
+ */
+$adapter->loginKey(file_get_contents('~/.ssh/id_rsa');
+
+// create a new console
+$console = new Console($adapter);
+
+// execute the command
+$console->command('pwd')->exec();
+
+// fetch output
+echo $console->getOutput();
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
+    <h2><a class="anchor" href="#sudo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using sudo</h2>
+    <pre><code>// create a new adapter
+$adapter = new LocalAdapter;
+
+// create a new console
+$console = new Console($adapter);
+
+// execute the command
+// you can pass the path to the
+// sudo binary as parameter e.g.
+// sudo('/non/standard/sudo/path')
+$console->sudo()->command('pwd')->exec();
+
+// fetch output
+echo $console->getOutput();
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
+    <h2><a class="anchor" href="#live" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fetching live output</h2>
+    <p>For long running commands, the getOutput() method might show unexpected behaviour. In these cases you should capture the live output of the command.</p>
+    <pre><code>// create a new adapter
+$adapter = new LocalAdapter;
+
+// create a new console
+$console = new Console($adapter);
+
+// execute the command
+// you can pass a closure to the
+// exec function which receives every
+// line of the live output
+$console->command('pwd')->exec(function($line) {
+        echo $line . PHP_EOL;
+});
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
+    <h2><a class="anchor" href="#custom" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing own adapters</h2>
+    Extending this library is easy. Just create a class which implements the AdapterInterface. Add the necessary methods and you are good to go.
+    Quick note: If you add a telnet adapter, i will find you :-).
+
+    <h1><a class="anchor" href="#support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support</h1>
+    <p>If you have any problems, please open an <a href="https://github.com/MrCrankHank/console-access/issues">issue</a> on github.</p>
+
+    <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/MrCrankHank/console-access">console-access</a> is maintained by <a href="https://github.com/MrCrankHank">MrCrankHank</a>.</span>
+        <span class="site-footer-credits">This page uses the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
     </footer>
-</div>
-
-</body>
-</html>
+</section>
