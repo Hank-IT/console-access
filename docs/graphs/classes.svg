@@ -21,10 +21,6 @@
 <path fill="none" stroke="gray" d="M225.979,-60C225.979,-60 747.866,-60 747.866,-60 753.866,-60 759.866,-66 759.866,-72 759.866,-72 759.866,-552 759.866,-552 759.866,-558 753.866,-564 747.866,-564 747.866,-564 225.979,-564 225.979,-564 219.979,-564 213.979,-558 213.979,-552 213.979,-552 213.979,-72 213.979,-72 213.979,-66 219.979,-60 225.979,-60"/>
 <text text-anchor="middle" x="486.922" y="-551.2" font-family="Times New Roman,serif" font-size="11.00" fill="gray">ConsoleAccess</text>
 </g>
-<g id="clust6" class="cluster"><title>cluster_\MrCrankHank\ConsoleAccess\Interfaces</title>
-<path fill="none" stroke="gray" d="M233.979,-141C233.979,-141 390.979,-141 390.979,-141 396.979,-141 402.979,-147 402.979,-153 402.979,-153 402.979,-255 402.979,-255 402.979,-261 396.979,-267 390.979,-267 390.979,-267 233.979,-267 233.979,-267 227.979,-267 221.979,-261 221.979,-255 221.979,-255 221.979,-153 221.979,-153 221.979,-147 227.979,-141 233.979,-141"/>
-<text text-anchor="middle" x="312.479" y="-254.2" font-family="Times New Roman,serif" font-size="11.00" fill="gray">Interfaces</text>
-</g>
 <g id="clust4" class="cluster"><title>cluster_\MrCrankHank\ConsoleAccess\Adapters</title>
 <path fill="none" stroke="gray" d="M589.366,-168C589.366,-168 679.366,-168 679.366,-168 685.366,-168 691.366,-174 691.366,-180 691.366,-180 691.366,-336 691.366,-336 691.366,-342 685.366,-348 679.366,-348 679.366,-348 589.366,-348 589.366,-348 583.366,-348 577.366,-342 577.366,-336 577.366,-336 577.366,-180 577.366,-180 577.366,-174 583.366,-168 589.366,-168"/>
 <text text-anchor="middle" x="634.366" y="-335.2" font-family="Times New Roman,serif" font-size="11.00" fill="gray">Adapters</text>
@@ -32,6 +28,10 @@
 <g id="clust5" class="cluster"><title>cluster_\MrCrankHank\ConsoleAccess\Exceptions</title>
 <path fill="none" stroke="gray" d="M264.479,-356C264.479,-356 739.866,-356 739.866,-356 745.866,-356 751.866,-362 751.866,-368 751.866,-368 751.866,-524 751.866,-524 751.866,-530 745.866,-536 739.866,-536 739.866,-536 264.479,-536 264.479,-536 258.479,-536 252.479,-530 252.479,-524 252.479,-524 252.479,-368 252.479,-368 252.479,-362 258.479,-356 264.479,-356"/>
 <text text-anchor="middle" x="502.172" y="-523.2" font-family="Times New Roman,serif" font-size="11.00" fill="gray">Exceptions</text>
+</g>
+<g id="clust6" class="cluster"><title>cluster_\MrCrankHank\ConsoleAccess\Interfaces</title>
+<path fill="none" stroke="gray" d="M233.979,-141C233.979,-141 390.979,-141 390.979,-141 396.979,-141 402.979,-147 402.979,-153 402.979,-153 402.979,-255 402.979,-255 402.979,-261 396.979,-267 390.979,-267 390.979,-267 233.979,-267 233.979,-267 227.979,-267 221.979,-261 221.979,-255 221.979,-255 221.979,-153 221.979,-153 221.979,-147 227.979,-141 233.979,-141"/>
+<text text-anchor="middle" x="312.479" y="-254.2" font-family="Times New Roman,serif" font-size="11.00" fill="gray">Interfaces</text>
 </g>
 <!-- \\MrCrankHank\\ConsoleAccess\\Adapters\\DummyAdapter -->
 <g id="node1" class="node"><title>\\MrCrankHank\\ConsoleAccess\\Adapters\\DummyAdapter</title>
