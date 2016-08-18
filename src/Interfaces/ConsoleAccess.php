@@ -20,4 +20,8 @@ interface ConsoleAccessInterface {
     public function command($command);
 
     public function sudo($sudo = '/usr/bin/sudo');
+
+    public function setPreExec(Closure $function);
+
+    public function setPostExec(Closure $function);
 }

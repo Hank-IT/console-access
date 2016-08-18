@@ -52,6 +52,22 @@ class ConsoleAccess implements ConsoleAccessInterface {
     private $command;
 
     /**
+     * Store closure which will be
+     * executed before the command
+     *
+     * @var
+     */
+    private $pre;
+
+    /**
+     * Store closure which will be
+     * executed after the command
+     *
+     * @var
+     */
+    private $post;
+
+    /**
      * Escape the command using escapeshellcmd?
      *
      * @var bool
@@ -118,7 +134,15 @@ class ConsoleAccess implements ConsoleAccessInterface {
             $this->command = escapeshellcmd($this->command);
         }
 
+        if (!is_null($this->pre)) {
+            call_user_func($this->pre, $this->command);
+        }
+
         $this->adapter->run($this->command, $live);
+
+        if (!is_null($this->post)) {
+            call_user_func_array($this->post, [$this->command, $this->getExitStatus()]);
+        }
     }
 
     /**
@@ -161,5 +185,33 @@ class ConsoleAccess implements ConsoleAccessInterface {
     public function notEscaped() {
         $this->escaped = false;
         return $this;
+    }
+
+    /**
+     * Set a function which will be executed directly
+     * before the command is executed. You can write
+     * something into an audit log for example.
+     * The function will receive the command as first
+     * parameter.
+     *
+     * @param Closure $function
+     */
+    public function setPreExec(Closure $function)
+    {
+        $this->pre = $function;
+    }
+
+    /**
+     * Set a function which will be executed directly
+     * after the command was executed. You can write
+     * something into an audit log for example.
+     * The function will receive the command as first
+     * parameter and the exit status as second one.
+     *
+     * @param Closure $function
+     */
+    public function setPostExec(Closure $function)
+    {
+        $this->post = $function;
     }
 }
