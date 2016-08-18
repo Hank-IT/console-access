@@ -191,13 +191,13 @@ $console = new ConsoleAccess($adapter);
 
 $console->setPreExec(function($command) {
         // log something to somewhere
-        log('Command is about to be executed: ' $command);
+        log('Command is about to be executed: ' . $command);
 });
 
 $console->setPreExec(function($command, $exitStatus) {
         // log something to somewhere
-        log('Command was executed: ' $command);
-        log('The status was: ' $exitStatus);
+        log('Command was executed: ' . $command);
+        log('The status was: ' . $exitStatus);
 });
 
 // execute the command
