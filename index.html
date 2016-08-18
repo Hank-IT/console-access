@@ -125,7 +125,7 @@ echo $console->getExitStatus();</code></pre>
 $adapter = new LocalAdapter;
 
 // create a new console
-$console = new Console($adapter);
+$console = new ConsoleAccess($adapter);
 
 // execute the command
 // you can pass the path to the
