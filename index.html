@@ -33,7 +33,7 @@
     <h1><a class="anchor" href="#header-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h1>
 
     <p>
-        This library abstracts, the access to a console via adapters. Out of the box there is a local and a ssh adapters.
+        This library abstracts the access to a console via adapters. Out of the box there is a local and a ssh adapter.
 
         These adapters enable you to execute commands localy and remotely without having to do if checks and stuff.
     </p>
@@ -158,8 +158,14 @@ $console->command('pwd')->exec(function($line) {
 // fetch exit status
 echo $console->getExitStatus();</code></pre>
 
+    <h2><a class="anchor" href="#custom" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing own adapters</h2>
+    <p>Extending this library is easy. Just create a class which implements the AdapterInterface. Add the necessary methods and you are good to go.
+    Quick note: If you add a telnet adapter, i will find you :-).</p>
+
+    <h1><a class="anchor" href="#version-1-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Version 1.1</h1>
+
     <h2><a class="anchor" href="#escape" aria-hidden="true"><span class="octicon octicon-link"></span></a>Escaping</h2>
-    <p>In version 1.1 (as of writing this dev-master) shell commands are escaped by default. If you want to pass a command without escaping you may call the notEscaped() method.</p>
+    <p>Commands are escaped by default using escapeshellcmd(). If you want to pass a command without escaping you may call the notEscaped() method.</p>
     <pre><code>// create a new adapter
 $adapter = new LocalAdapter;
 
@@ -175,9 +181,33 @@ echo $console->getOutput();
 // fetch exit status
 echo $console->getExitStatus();</code></pre>
 
-    <h2><a class="anchor" href="#custom" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing own adapters</h2>
-    Extending this library is easy. Just create a class which implements the AdapterInterface. Add the necessary methods and you are good to go.
-    Quick note: If you add a telnet adapter, i will find you :-).
+    <h2><a class="anchor" href="#escape" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pre/Post functions</h2>
+    <p>If you want to execute some code before and after the command is run, you can so by using setPreExec() and setPostExec()</p>
+    <pre><code>// create a new adapter
+$adapter = new LocalAdapter;
+
+// create a new console
+$console = new Console($adapter);
+
+$console->setPreExec(function($command) {
+        // log something to somewhere
+        log('Command is about to be executed: ' $command);
+});
+
+$console->setPreExec(function($command, $exitStatus) {
+        // log something to somewhere
+        log('Command was executed: ' $command);
+        log('The status was: ' $exitStatus);
+});
+
+// execute the command
+$console->command('pwd')->exec();
+
+// fetch output
+echo $console->getOutput();
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
 
     <h1><a class="anchor" href="#support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support</h1>
     <p>If you have any problems, please open an <a href="https://github.com/MrCrankHank/console-access/issues">issue</a> on github.</p>
