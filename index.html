@@ -158,6 +158,23 @@ $console->command('pwd')->exec(function($line) {
 // fetch exit status
 echo $console->getExitStatus();</code></pre>
 
+    <h2><a class="anchor" href="#escape" aria-hidden="true"><span class="octicon octicon-link"></span></a>Escaping</h2>
+    <p>In version 1.1 (as of writing this dev-master) shell commands are escaped by default. If you want to pass a command without escaping you may call the notEscaped() method.</p>
+    <pre><code>// create a new adapter
+$adapter = new LocalAdapter;
+
+// create a new console
+$console = new Console($adapter);
+
+// execute the command
+$console->notEscaped()->command('pwd')->exec();
+
+// fetch output
+echo $console->getOutput();
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
     <h2><a class="anchor" href="#custom" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing own adapters</h2>
     Extending this library is easy. Just create a class which implements the AdapterInterface. Add the necessary methods and you are good to go.
     Quick note: If you add a telnet adapter, i will find you :-).
