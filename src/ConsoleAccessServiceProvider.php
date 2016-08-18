@@ -16,6 +16,8 @@
 namespace MrCrankHank\ConsoleAccess;
 
 use Illuminate\Support\ServiceProvider;
+use MrCrankHank\ConsoleAccess\Adapters\LocalAdapter;
+use MrCrankHank\ConsoleAccess\Adapters\SshAdapter;
 
 /**
  * Class ConsoleAccessServiceProvider
@@ -28,13 +30,6 @@ use Illuminate\Support\ServiceProvider;
  */
 class ConsoleAccessServiceProvider extends ServiceProvider
 {
-    /**
-     * All commands in this array will be registered with laravel
-     *
-     * @var array
-     */
-    protected $commands = [];
-
     /**
      * Bootstrap the application services.
      *
@@ -56,6 +51,12 @@ class ConsoleAccessServiceProvider extends ServiceProvider
             return new ConsoleAccess($parameters['adapter']);
         });
 
-        $this->commands($this->commands);
+        $this->app->bind(LocalAdapter::class, function($app, $parameters) {
+            return new LocalAdapter;
+        });
+
+        $this->app->bind(SshAdapter::class, function($app, $parameters) {
+            return new SshAdapter($parameters['host'], $parameters['user'], $parameters['publicKey']);
+        });
     }
 }
