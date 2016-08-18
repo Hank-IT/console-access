@@ -194,7 +194,7 @@ $console->setPreExec(function($command) {
         log('Command is about to be executed: ' . $command);
 });
 
-$console->setPreExec(function($command, $exitStatus) {
+$console->setPostExec(function($command, $exitStatus) {
         // log something to somewhere
         log('Command was executed: ' . $command);
         log('The status was: ' . $exitStatus);
