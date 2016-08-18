@@ -52,6 +52,13 @@ class ConsoleAccess implements ConsoleAccessInterface {
     private $command;
 
     /**
+     * Escape the command using escapeshellcmd?
+     *
+     * @var bool
+     */
+    public $escaped = true;
+
+    /**
      * ConsoleAccess constructor.
      *
      * @param AdapterInterface $adapter
@@ -101,11 +108,17 @@ class ConsoleAccess implements ConsoleAccessInterface {
             throw new MissingCommandException('Command is missing');
         }
 
-        if ($this->sudo === false) {
-            $this->adapter->run($this->command, $live);
-        } else {
-            $this->adapter->run($this->sudo . ' ' . $this->command, $live);
+        // prepend sudo if enabled
+        if ($this->sudo) {
+            $this->command = $this->sudo . ' ' . $this->command;
         }
+
+        // escape the command if enabled
+        if ($this->escaped) {
+            $this->command = escapeshellcmd($this->command);
+        }
+
+        $this->adapter->run($this->command, $live);
     }
 
     /**
@@ -127,5 +140,26 @@ class ConsoleAccess implements ConsoleAccessInterface {
     public function getExitStatus()
     {
         return $this->adapter->getExitStatus();
+    }
+
+    /**
+     * Return the given command.
+     *
+     * @return mixed
+     */
+    public function getCommand()
+    {
+        return $this->command;
+    }
+
+    /**
+     * By default the command is escaped.
+     * Use this function if you want to disable it.
+     *
+     * @return $this
+     */
+    public function notEscaped() {
+        $this->escaped = false;
+        return $this;
     }
 }
