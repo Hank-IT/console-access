@@ -16,7 +16,6 @@
 
 namespace MrCrankHank\ConsoleAccess\Adapters;
 
-use Mockery\CountValidator\Exception;
 use MrCrankHank\ConsoleAccess\Exceptions\ConnectionNotPossibleException;
 use MrCrankHank\ConsoleAccess\Exceptions\PublicKeyMismatchException;
 use MrCrankHank\ConsoleAccess\Interfaces\AdapterInterface;
