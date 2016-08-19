@@ -290,7 +290,9 @@ class ConsoleAccess implements ConsoleAccessInterface {
     }
 
     /**
-     * Return the duration of command exec
+     * Return the duration of command exec.
+     *
+     * For simple commands, this might return 0.
      *
      * @return int
      */
