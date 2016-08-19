@@ -4,7 +4,8 @@ namespace MrCrankHank\ConsoleAccess\Interfaces;
 
 use Closure;
 
-interface ConsoleAccessInterface {
+interface ConsoleAccessInterface
+{
     public function __construct(AdapterInterface $adapter);
 
     public function getOutput();
