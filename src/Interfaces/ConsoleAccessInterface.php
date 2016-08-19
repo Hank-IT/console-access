@@ -11,13 +11,21 @@ interface ConsoleAccessInterface {
 
     public function getExitStatus();
 
-    public function getCommand();
+    public function getBin();
 
-    public function notEscaped();
+    public function getParams();
 
     public function exec(Closure $live = null);
 
-    public function command($command);
+    public function bin($bin);
+
+    public function param($param, $escape = true);
+
+    public function getStart();
+
+    public function getEnd();
+
+    public function getDuration();
 
     public function sudo($sudo = '/usr/bin/sudo');
 

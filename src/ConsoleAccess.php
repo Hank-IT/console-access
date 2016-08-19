@@ -45,13 +45,6 @@ class ConsoleAccess implements ConsoleAccessInterface {
     private $sudo = false;
 
     /**
-     * Command to be executed
-     *
-     * @var
-     */
-    private $command;
-
-    /**
      * Store closure which will be
      * executed before the command
      *
@@ -68,11 +61,35 @@ class ConsoleAccess implements ConsoleAccessInterface {
     private $post;
 
     /**
-     * Escape the command using escapeshellcmd?
+     * Save the params
      *
-     * @var bool
+     * @var array
      */
-    public $escaped = true;
+    private $params = [];
+
+    /**
+     * Path to the bin, which
+     * should be executed.
+     *
+     * @var string
+     */
+    private $bin;
+
+    /**
+     * Unix timestamp of the start
+     * of the command exec
+     *
+     * @var integer
+     */
+    private $start;
+
+    /**
+     * Unix timestamp of the end
+     * of the command exec
+     *
+     * @var integer
+     */
+    private $end;
 
     /**
      * ConsoleAccess constructor.
@@ -98,14 +115,45 @@ class ConsoleAccess implements ConsoleAccessInterface {
     }
 
     /**
-     * Set the command to which should be executed.
+     * Give a bin to be executed.
+     * You may append parameters using
+     * the param() method
      *
-     * @param $command
+     * @param $bin
+     * @param $escape boolean
+     *
      * @return $this
      */
-    public function command($command)
+    public function bin($bin, $escape = true)
     {
-        $this->command = $command;
+        if ($escape) {
+            // prevent multiple commands from
+            // being passed by escapine the value
+            $bin = escapeshellcmd($bin);
+        }
+
+        $this->bin = $bin;
+
+        return $this;
+    }
+
+    /**
+     * Append parameters
+     *
+     * @param $param
+     * @param $escape boolean
+     *
+     * @return $this
+     */
+    public function param($param, $escape = true)
+    {
+        if ($escape) {
+            // prevent multiple parameters from being
+            // passed by escaping the value
+            $param = escapeshellarg($param);
+        }
+
+        $this->params[] = $param;
 
         return $this;
     }
@@ -120,28 +168,35 @@ class ConsoleAccess implements ConsoleAccessInterface {
      */
     public function exec(Closure $live = null)
     {
-        if (is_null($this->command)) {
+        if (is_null($this->bin)) {
             throw new MissingCommandException('Command is missing');
+        }
+
+        if (!empty($this->params)) {
+            // add whitespace to the end
+            $this->bin .= ' ';
         }
 
         // prepend sudo if enabled
         if ($this->sudo) {
-            $this->command = $this->sudo . ' ' . $this->command;
+            $this->bin = $this->sudo . ' ' . $this->bin;
         }
 
-        // escape the command if enabled
-        if ($this->escaped) {
-            $this->command = escapeshellcmd($this->command);
-        }
+        // add parameters to command
+        $this->bin .= implode(' ', $this->params);
 
         if (!is_null($this->pre)) {
-            call_user_func($this->pre, $this->command);
+            call_user_func($this->pre, $this->bin);
         }
 
-        $this->adapter->run($this->command, $live);
+        $this->start = time();
+
+        $this->adapter->run($this->bin, $live);
+
+        $this->end = time();
 
         if (!is_null($this->post)) {
-            call_user_func_array($this->post, [$this->command, $this->getExitStatus()]);
+            call_user_func_array($this->post, [$this->bin, $this->getExitStatus(), $this->start, $this->end, $this->getDuration()]);
         }
     }
 
@@ -171,20 +226,9 @@ class ConsoleAccess implements ConsoleAccessInterface {
      *
      * @return mixed
      */
-    public function getCommand()
+    public function getBin()
     {
-        return $this->command;
-    }
-
-    /**
-     * By default the command is escaped.
-     * Use this function if you want to disable it.
-     *
-     * @return $this
-     */
-    public function notEscaped() {
-        $this->escaped = false;
-        return $this;
+        return $this->bin;
     }
 
     /**
@@ -213,5 +257,45 @@ class ConsoleAccess implements ConsoleAccessInterface {
     public function setPostExec(Closure $function)
     {
         $this->post = $function;
+    }
+
+    /**
+     * Return the parameters.
+     *
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * Return start timestamp
+     *
+     * @return integer
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * Return end timestamp
+     *
+     * @return integer
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * Return the duration of command exec
+     *
+     * @return int
+     */
+    public function getDuration()
+    {
+        return $this->end - $this->start;
     }
 }
