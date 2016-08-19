@@ -7,12 +7,10 @@
  * PHP version 5.6
  *
  * @category Console
- * @package  MrCrankHank\ConsoleAccess
  * @author   Alexander Hank <mail@alexander-hank.de>
  * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
  * @link     null
  */
-
 namespace MrCrankHank\ConsoleAccess;
 
 use MrCrankHank\ConsoleAccess\Exceptions\MissingCommandException;
@@ -21,15 +19,15 @@ use MrCrankHank\ConsoleAccess\Interfaces\AdapterInterface;
 use Closure;
 
 /**
- * Class ConsoleAccess
+ * Class ConsoleAccess.
  *
  * @category Console
- * @package  MrCrankHank\ConsoleAccess
  * @author   Alexander Hank <mail@alexander-hank.de>
  * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
  * @link     null
  */
-class ConsoleAccess implements ConsoleAccessInterface {
+class ConsoleAccess implements ConsoleAccessInterface
+{
     /**
      * Adapter to execute the functions on.
      *
@@ -38,7 +36,7 @@ class ConsoleAccess implements ConsoleAccessInterface {
     private $adapter;
 
     /**
-     * Path to the sudo binary
+     * Path to the sudo binary.
      *
      * @var
      */
@@ -46,7 +44,7 @@ class ConsoleAccess implements ConsoleAccessInterface {
 
     /**
      * Store closure which will be
-     * executed before the command
+     * executed before the command.
      *
      * @var
      */
@@ -54,14 +52,14 @@ class ConsoleAccess implements ConsoleAccessInterface {
 
     /**
      * Store closure which will be
-     * executed after the command
+     * executed after the command.
      *
      * @var
      */
     private $post;
 
     /**
-     * Save the params
+     * Save the params.
      *
      * @var array
      */
@@ -77,17 +75,17 @@ class ConsoleAccess implements ConsoleAccessInterface {
 
     /**
      * Unix timestamp of the start
-     * of the command exec
+     * of the command exec.
      *
-     * @var integer
+     * @var int
      */
     private $start;
 
     /**
      * Unix timestamp of the end
-     * of the command exec
+     * of the command exec.
      *
-     * @var integer
+     * @var int
      */
     private $end;
 
@@ -117,7 +115,7 @@ class ConsoleAccess implements ConsoleAccessInterface {
     /**
      * Give a bin to be executed.
      * You may append parameters using
-     * the param() method
+     * the param() method.
      *
      * @param $bin
      * @param $escape boolean
@@ -138,7 +136,7 @@ class ConsoleAccess implements ConsoleAccessInterface {
     }
 
     /**
-     * Append parameters
+     * Append parameters.
      *
      * @param $param
      * @param $escape boolean
@@ -177,7 +175,7 @@ class ConsoleAccess implements ConsoleAccessInterface {
             $this->bin = $this->sudo . ' ' . $this->bin;
         }
 
-        if (!empty($this->params)) {
+        if (! empty($this->params)) {
             // add whitespace to the end
             $this->bin .= ' ';
 
@@ -185,7 +183,7 @@ class ConsoleAccess implements ConsoleAccessInterface {
             $this->bin .= implode(' ', $this->params);
         }
 
-        if (!is_null($this->pre)) {
+        if (! is_null($this->pre)) {
             call_user_func($this->pre, $this->bin);
         }
 
@@ -195,14 +193,14 @@ class ConsoleAccess implements ConsoleAccessInterface {
 
         $this->end = time();
 
-        if (!is_null($this->post)) {
+        if (! is_null($this->post)) {
             call_user_func_array($this->post, [$this->bin, $this->getExitStatus(), $this->start, $this->end, $this->getDuration()]);
         }
     }
 
     /**
      * Get full output of the
-     * executed command
+     * executed command.
      *
      * @return mixed
      */
@@ -212,7 +210,7 @@ class ConsoleAccess implements ConsoleAccessInterface {
     }
 
     /**
-     * Get exit status of the executed command
+     * Get exit status of the executed command.
      *
      * @return mixed
      */
@@ -270,9 +268,9 @@ class ConsoleAccess implements ConsoleAccessInterface {
     }
 
     /**
-     * Return start timestamp
+     * Return start timestamp.
      *
-     * @return integer
+     * @return int
      */
     public function getStart()
     {
@@ -280,9 +278,9 @@ class ConsoleAccess implements ConsoleAccessInterface {
     }
 
     /**
-     * Return end timestamp
+     * Return end timestamp.
      *
-     * @return integer
+     * @return int
      */
     public function getEnd()
     {
