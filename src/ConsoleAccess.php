@@ -172,18 +172,18 @@ class ConsoleAccess implements ConsoleAccessInterface {
             throw new MissingCommandException('Command is missing');
         }
 
-        if (!empty($this->params)) {
-            // add whitespace to the end
-            $this->bin .= ' ';
-        }
-
         // prepend sudo if enabled
         if ($this->sudo) {
             $this->bin = $this->sudo . ' ' . $this->bin;
         }
 
-        // add parameters to command
-        $this->bin .= implode(' ', $this->params);
+        if (!empty($this->params)) {
+            // add whitespace to the end
+            $this->bin .= ' ';
+
+            // add parameters to command
+            $this->bin .= implode(' ', $this->params);
+        }
 
         if (!is_null($this->pre)) {
             call_user_func($this->pre, $this->bin);
