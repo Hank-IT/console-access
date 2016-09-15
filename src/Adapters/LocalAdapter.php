@@ -47,20 +47,20 @@ class LocalAdapter implements AdapterInterface
      */
     public function run($command, Closure $live = null)
     {
-        while (@ob_end_flush());
+        while (@ob_end_flush()) ;
 
         $run = popen($command . ' 2>&1', 'r');
 
-        if (! is_null($live)) {
-            while (! feof($run)) {
-                $line = fread($run, 4096);
+        while (!feof($run)) {
+            $line = fread($run, 4096);
 
-                $this->output .= $line;
+            $this->output .= $line;
 
+            if (!is_null($live)) {
                 call_user_func($live, $line);
-
-                @flush();
             }
+
+            @flush();
         }
 
         $this->exitStatus = pclose($run);
@@ -68,8 +68,6 @@ class LocalAdapter implements AdapterInterface
 
     /**
      * Return the output of the last command.
-     * Does not work well with long running commands.
-     * You should capture the live output instead.
      *
      * @return mixed
      */
