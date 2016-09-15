@@ -47,16 +47,16 @@ class LocalAdapter implements AdapterInterface
      */
     public function run($command, Closure $live = null)
     {
-        while (@ob_end_flush()) ;
+        while (@ob_end_flush());
 
         $run = popen($command . ' 2>&1', 'r');
 
-        while (!feof($run)) {
+        while (! feof($run)) {
             $line = fread($run, 4096);
 
             $this->output .= $line;
 
-            if (!is_null($live)) {
+            if (! is_null($live)) {
                 call_user_func($live, $line);
             }
 
