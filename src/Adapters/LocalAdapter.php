@@ -37,7 +37,7 @@ class LocalAdapter implements AdapterInterface
     /**
      * @var string
      */
-    private $output;
+    private $output = '';
 
     /**
      * Run a command.
@@ -55,13 +55,13 @@ class LocalAdapter implements AdapterInterface
             while (! feof($run)) {
                 $line = fread($run, 4096);
 
+                $this->output .= $line;
+
                 call_user_func($live, $line);
 
                 @flush();
             }
         }
-
-        $this->output = fread($run, 8192);
 
         $this->exitStatus = pclose($run);
     }
