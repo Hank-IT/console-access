@@ -335,7 +335,9 @@ class ConsoleAccess implements ConsoleAccessInterface
         }
 
         foreach ($this->params as $param) {
-            if (! $param['hidden']) {
+            if ($param['hidden']) {
+                $command .= ' hidden' . $param['delimiter'];
+            } else {
                 $command .= ' ' . $param['param'] . $param['delimiter'];
             }
         }
