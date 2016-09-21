@@ -74,7 +74,7 @@ class ConsoleAccess implements ConsoleAccessInterface
     private $bin;
 
     /**
-     * Full command
+     * Full command.
      *
      * @var
      */
@@ -163,7 +163,7 @@ class ConsoleAccess implements ConsoleAccessInterface
         $this->params[] = [
             'param' => $param,
             'hidden' => $hidden,
-            'delimiter' => $delimiter
+            'delimiter' => $delimiter,
         ];
 
         return $this;
