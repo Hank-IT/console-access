@@ -74,6 +74,13 @@ class ConsoleAccess implements ConsoleAccessInterface
     private $bin;
 
     /**
+     * Full command
+     *
+     * @var
+     */
+    private $command;
+
+    /**
      * Unix timestamp of the start
      * of the command exec.
      *
@@ -138,12 +145,14 @@ class ConsoleAccess implements ConsoleAccessInterface
     /**
      * Append parameters.
      *
-     * @param $param
+     * @param $param string
+     * @param $hidden boolean
      * @param $escape boolean
+     * @param $delimiter string
      *
      * @return $this
      */
-    public function param($param, $escape = true)
+    public function param($param, $hidden = false, $escape = true, $delimiter = ' ')
     {
         if ($escape) {
             // prevent multiple parameters from being
@@ -151,7 +160,11 @@ class ConsoleAccess implements ConsoleAccessInterface
             $param = escapeshellarg($param);
         }
 
-        $this->params[] = $param;
+        $this->params[] = [
+            'param' => $param,
+            'hidden' => $hidden,
+            'delimiter' => $delimiter
+        ];
 
         return $this;
     }
@@ -170,26 +183,15 @@ class ConsoleAccess implements ConsoleAccessInterface
             throw new MissingCommandException('Command is missing');
         }
 
-        // prepend sudo if enabled
-        if ($this->sudo) {
-            $this->bin = $this->sudo . ' ' . $this->bin;
-        }
-
-        if (! empty($this->params)) {
-            // add whitespace to the end
-            $this->bin .= ' ';
-
-            // add parameters to command
-            $this->bin .= implode(' ', $this->params);
-        }
-
         if (! is_null($this->pre)) {
             call_user_func($this->pre, $this->bin);
         }
 
+        $this->buildCommand();
+
         $this->start = time();
 
-        $this->adapter->run($this->bin, $live);
+        $this->adapter->run($this->command, $live);
 
         $this->end = time();
 
@@ -297,5 +299,47 @@ class ConsoleAccess implements ConsoleAccessInterface
     public function getDuration()
     {
         return $this->end - $this->start;
+    }
+
+    /**
+     * Return the full command.
+     *
+     * @return mixed
+     */
+    public function getCommand()
+    {
+        return $this->buildCommandWithoutHiddenParams();
+    }
+
+    private function buildCommand()
+    {
+        // prepend sudo if enabled
+        if ($this->sudo) {
+            $this->command = $this->sudo . ' ' . $this->bin;
+        } else {
+            $this->command = $this->bin;
+        }
+
+        foreach ($this->params as $param) {
+            $this->command .= ' ' . $param['param'] . $param['delimiter'];
+        }
+    }
+
+    private function buildCommandWithoutHiddenParams()
+    {
+        // prepend sudo if enabled
+        if ($this->sudo) {
+            $command = $this->sudo . ' ' . $this->bin;
+        } else {
+            $command = $this->bin;
+        }
+
+        foreach ($this->params as $param) {
+            if (! $param['hidden']) {
+                $command .= ' ' . $param['param'] . $param['delimiter'];
+            }
+        }
+
+        return $command;
     }
 }
