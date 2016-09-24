@@ -161,7 +161,7 @@ class ConsoleAccess implements ConsoleAccessInterface
 
         $this->params[] = [
             'param' => $param,
-            'hidden' => $hidden
+            'hidden' => $hidden,
         ];
 
         return $this;
