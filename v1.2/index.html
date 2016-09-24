@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+    <meta charset="UTF-8">
+    <title>console-access</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/cayman.css">
+
+<section class="page-header">
+    <h1 class="project-name">console-access</h1>
+    <h2 class="project-tagline">Version 1.2</h2>
+    <h2 class="project-tagline">A library written in php, which abstracts the access to a console via adapters.</h2>
+    <a href="https://github.com/MrCrankHank/console-access" class="btn">View on GitHub</a>
+    <a href="https://github.com/MrCrankHank/console-access/archive/1.2.zip" class="btn">Download .zip</a>
+    <a href="https://github.com/MrCrankHank/console-access/archive/1.2.tar.gz" class="btn">Download .tar.gz</a>
+    <div style="text-align: center; padding-top: 15px;">
+        <iframe src="https://ghbtns.com/github-btn.html?user=mrcrankhank&repo=console-access&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="https://ghbtns.com/github-btn.html?user=mrcrankhank&repo=console-access&type=fork&count=true&size=large" frameborder="0" scrolling="0" width="158px" height="30px"></iframe>
+        <iframe src="https://ghbtns.com/github-btn.html?user=mrcrankhank&repo=console-access&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="https://ghbtns.com/github-btn.html?user=mrcrankhank&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+    </div>
+</section>
+
+<section class="main-content">
+    <div style="text-align: center">
+        <img src="https://poser.pugx.org/mrcrankhank/console-access/downloads" alt="Total downloads">
+        <img src="https://poser.pugx.org/mrcrankhank/console-access/v/stable" alt="Latest stable version">
+        <img src="https://poser.pugx.org/mrcrankhank/console-access/v/unstable" alt="Latest unstable version">
+        <img src="https://poser.pugx.org/mrcrankhank/console-access/license" alt="License">
+    </div>
+
+    <h1><a class="anchor" href="#header-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h1>
+
+    <p>
+        This library abstracts the access to a console via adapters. Out of the box there is a local and a ssh adapter.
+
+        These adapters enable you to execute commands localy and remotely without having to do if checks and stuff.
+    </p>
+
+    <h1><a class="anchor" href="#header-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting started</h1>
+    <p>composer require mrcrankhank/console-access</p>
+
+    <h1><a class="anchor" href="#docs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h1>
+    You can find the api documentation, generated using <a href="https://www.phpdoc.org/">phpdoc</a>, here: <a href="docs/index.html">Link</a>
+
+    <h1><a class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h1>
+    <p>These examples assume, that you include the composer autoloader somewhere and that you pulled in the necessary classes via use at the top.</p>
+
+    <h2><a class="anchor" href="#local" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local</h2>
+
+    <pre><code>// create a new adapter
+$adapter = new LocalAdapter;
+
+// create a new console
+$console = new ConsoleAccess($adapter);
+
+// execute the command
+$console->bin('pwd')->exec();
+
+// fetch output
+echo $console->getOutput();
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
+    <h2><a class="anchor" href="#sshPw" aria-hidden="true"><span class="octicon octicon-link"></span></a>SSH with password</h2>
+
+    <pre><code>/*
+ * create a new adapter
+ * provide host, user and (for security reasons) the <strong>public</strong>
+ * <strong>key</strong> of the host (in debian: "/etc/ssh/ssh_host_rsa_key.pub")
+ */
+$adapter = new SshAdapter('127.0.0.1', 'user', 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZCcmN09Wa62slAy2ASo+/TVlYIb4GufKAV02hjrYhzxCkOdxJOqLmfjkenr+hKAtBf4bHvVFZGI3jd12rLSgMTG7h53Zumv5r4oIl+SBxB/+U2PEk8X5XEDRvR1eP5+3fdAB8w/Ds4KI7HGMG0IkSvP8Gqlsq6AE/t6rQI8ac52bWHkmBHa7Ebt3JIKbi6E0HdCq0Qy35GadVCaBJRW49oqxYL1hVrcifB4DscqarU35+zDO6UYPdiFgfgfIFTIcB9nPAwiOmHkg+4uJbonZyjGSr+phYj0BIQ4JIeuSjxOjkfZteC6ePuqjwZNUZVA+SMlm3+ahGSDq3sDwOhhK7');
+
+// login to the remote server
+$adapter->loginPassword('password');
+
+// create a new console
+$console = new ConsoleAccess($adapter);
+
+// execute the command
+$console->bin('pwd')->exec();
+
+// fetch output
+echo $console->getOutput();
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
+    <h2><a class="anchor" href="#sshKey" aria-hidden="true"><span class="octicon octicon-link"></span></a>SSH with public key authentication</h2>
+
+    <pre><code>/*
+ * create a new adapter
+ * provide host, user and (for security reasons) the <strong>public</strong>
+ * <strong>key</strong> of the host (in debian: "/etc/ssh/ssh_host_rsa_key.pub")
+ */
+$adapter = new SshAdapter('127.0.0.1', 'user', 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZCcmN09Wa62slAy2ASo+/TVlYIb4GufKAV02hjrYhzxCkOdxJOqLmfjkenr+hKAtBf4bHvVFZGI3jd12rLSgMTG7h53Zumv5r4oIl+SBxB/+U2PEk8X5XEDRvR1eP5+3fdAB8w/Ds4KI7HGMG0IkSvP8Gqlsq6AE/t6rQI8ac52bWHkmBHa7Ebt3JIKbi6E0HdCq0Qy35GadVCaBJRW49oqxYL1hVrcifB4DscqarU35+zDO6UYPdiFgfgfIFTIcB9nPAwiOmHkg+4uJbonZyjGSr+phYj0BIQ4JIeuSjxOjkfZteC6ePuqjwZNUZVA+SMlm3+ahGSDq3sDwOhhK7');
+
+/*
+ * login to the remote server
+ * You can provide a path or the
+ * the content of the key.
+ *
+ * If your key is encrypted,
+ * you can provide a password
+ * after the key path/content
+ */
+$adapter->loginKey(file_get_contents('~/.ssh/id_rsa');
+
+// create a new console
+$console = new ConsoleAccess($adapter);
+
+// execute the command
+$console->bin('pwd')->exec();
+
+// fetch output
+echo $console->getOutput();
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
+    <h2><a class="anchor" href="#sudo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using sudo</h2>
+    <pre><code>// create a new adapter
+$adapter = new LocalAdapter;
+
+// create a new console
+$console = new ConsoleAccess($adapter);
+
+// execute the command
+// you can pass the path to the
+// sudo binary as parameter e.g.
+// sudo('/non/standard/sudo/path')
+$console->sudo()->bin('pwd')->exec();
+
+// fetch output
+echo $console->getOutput();
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
+    <h2><a class="anchor" href="#live" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fetching live output</h2>
+    <p>For long running commands, the getOutput() method might show unexpected behaviour. In these cases you should capture the live output of the command.</p>
+    <pre><code>// create a new adapter
+$adapter = new LocalAdapter;
+
+// create a new console
+$console = new ConsoleAccess($adapter);
+
+// execute the command
+// you can pass a closure to the
+// exec function which receives every
+// line of the live output
+$console->bin('pwd')->exec(function($line) {
+        echo $line . PHP_EOL;
+});
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
+    <h2><a class="anchor" href="#custom" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing own adapters</h2>
+    <p>Extending this library is easy. Just create a class which implements the AdapterInterface. Add the necessary methods and you are good to go.
+    Quick note: If you add a telnet adapter, i will find you :-).</p>
+
+    <h2><a class="anchor" href="#params" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parameter</h2>
+    <p>You may pass parameters using the chainable param() function.</p>
+    <pre><code>// create a new adapter
+$adapter = new LocalAdapter;
+
+// create a new console
+$console = new ConsoleAccess($adapter);
+
+// execute command with parameter
+$console->bin('pwd')->param('-L')->param('--some-other-parameter')->exec();
+
+// fetch output
+echo $console->getOutput();
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
+    <h2><a class="anchor" href="#escape" aria-hidden="true"><span class="octicon octicon-link"></span></a>Escaping</h2>
+    <p>Commands are escaped by default using escapeshellcmd() and parameters by using escapeshellarg(). If you want to pass a command without escaping you may pass false as second parameter.</p>
+    <pre><code>// create a new adapter
+$adapter = new LocalAdapter;
+
+// create a new console
+$console = new ConsoleAccess($adapter);
+
+// execute the command an
+// unescaped command
+$console->bin('pwd', false)->exec();
+
+// execute an escaped command
+// with unescaped parameter
+$console->bin('pwd')->param('-l', false)->exec();
+
+// fetch output
+echo $console->getOutput();
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
+    <h2><a class="anchor" href="#escape" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pre/Post functions</h2>
+    <p>If you want to execute some code before and after the command is run, you can so by using setPreExec() and setPostExec()</p>
+    <pre><code>// create a new adapter
+$adapter = new LocalAdapter;
+
+// create a new console
+$console = new ConsoleAccess($adapter);
+
+$console->setPreExec(function($command) {
+        // log something to somewhere
+        log('Command is about to be executed: ' . $command);
+});
+
+$console->setPostExec(function($command, $exitStatus, $start, $end, $duration) {
+        // log something to somewhere
+        log('Command was executed: ' . $command);
+        log('The status was: ' . $exitStatus);
+        log('It was started at: ' . $start);
+        log('It finished at: ' . $end);
+        log('It took ' . $duration . ' seconds');
+});
+
+// execute the command
+$console->bin('pwd')->exec();
+
+// fetch output
+echo $console->getOutput();
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
+    <h2><a class="anchor" href="#duration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Duration</h2>
+    <pre><code>// create a new adapter
+$adapter = new LocalAdapter;
+
+// create a new console
+$console = new ConsoleAccess($adapter);
+
+// execute the command
+$console->bin('pwd')->exec();
+
+// get start timestamp
+echo $console->getStart();
+
+// get end timestamp
+echo $console->getEnd();
+
+// get duration
+// might return 0 for short running commands
+echo $console->getDuration();</code></pre>
+
+    <h1><a class="anchor" href="#support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support</h1>
+    <p>If you have any problems, please open an <a href="https://github.com/MrCrankHank/console-access/issues">issue</a> on github.</p>
+
+    <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/MrCrankHank/console-access">console-access</a> is maintained by <a href="https://github.com/MrCrankHank">MrCrankHank</a>.</span>
+        <span class="site-footer-credits">This page uses the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+    </footer>
+</section>

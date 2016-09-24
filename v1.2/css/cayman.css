@@ -1,12 +1,13 @@
+* {
+  box-sizing: border-box; }
+
 body {
-  margin-top: 40px;
+  padding: 0;
+  margin: 0;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: #fff;
-  text-align: center;
-  background-color: #4B79A1;
-}
+  color: #606c71; }
 
 a {
   color: #1e6bb8;
@@ -24,29 +25,44 @@ a {
   border-width: 1px;
   border-radius: 0.3rem;
   transition: color 0.2s, background-color 0.2s, border-color 0.2s; }
-.btn:hover {
-  color: rgba(255, 255, 255, 0.8);
-  text-decoration: none;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.3); }
-.btn + .btn {
-  margin-left: 1rem; }
-@media screen and (min-width: 64em) {
-  .btn {
-    padding: 0.75rem 1rem; } }
-@media screen and (min-width: 42em) and (max-width: 64em) {
-  .btn {
-    padding: 0.6rem 0.9rem;
-    font-size: 0.9rem; } }
-@media screen and (max-width: 42em) {
-  .btn {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    font-size: 0.9rem; }
+  .btn:hover {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3); }
   .btn + .btn {
-    margin-top: 1rem;
-    margin-left: 0; } }
+    margin-left: 1rem; }
+  @media screen and (min-width: 64em) {
+    .btn {
+      padding: 0.75rem 1rem; } }
+  @media screen and (min-width: 42em) and (max-width: 64em) {
+    .btn {
+      padding: 0.6rem 0.9rem;
+      font-size: 0.9rem; } }
+  @media screen and (max-width: 42em) {
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 0.9rem; }
+      .btn + .btn {
+        margin-top: 1rem;
+        margin-left: 0; } }
+
+.page-header {
+  color: #fff;
+  text-align: center;
+  background-color: #159957;
+  background-image: linear-gradient(120deg, #4B79A1, #283E51); }
+  @media screen and (min-width: 64em) {
+    .page-header {
+      padding: 5rem 6rem; } }
+  @media screen and (min-width: 42em) and (max-width: 64em) {
+    .page-header {
+      padding: 3rem 4rem; } }
+  @media screen and (max-width: 42em) {
+    .page-header {
+      padding: 2rem 1rem; } }
 
 .project-name {
   margin-top: 0;
@@ -104,7 +120,7 @@ a {
     margin-top: 2rem;
     margin-bottom: 1rem;
     font-weight: normal;
-    color: white; }
+    color: #159957; }
   .main-content p {
     margin-bottom: 1em; }
   .main-content code {
@@ -112,6 +128,7 @@ a {
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
     font-size: 0.9rem;
     color: #567482;
+    background-color: #f3f6fa;
     border-radius: 0.3rem; }
   .main-content pre {
     padding: 0.8rem;
@@ -154,6 +171,7 @@ a {
     overflow: initial;
     line-height: inherit;
     word-wrap: normal;
+    background-color: transparent;
     border: 0; }
     .main-content pre code:before, .main-content pre code:after,
     .main-content pre tt:before,
@@ -198,4 +216,26 @@ a {
     height: 2px;
     padding: 0;
     margin: 1rem 0;
+    background-color: #eff0f1;
     border: 0; }
+
+.site-footer {
+  padding-top: 2rem;
+  margin-top: 2rem;
+  border-top: solid 1px #eff0f1; }
+  @media screen and (min-width: 64em) {
+    .site-footer {
+      font-size: 1rem; } }
+  @media screen and (min-width: 42em) and (max-width: 64em) {
+    .site-footer {
+      font-size: 1rem; } }
+  @media screen and (max-width: 42em) {
+    .site-footer {
+      font-size: 0.9rem; } }
+
+.site-footer-owner {
+  display: block;
+  font-weight: bold; }
+
+.site-footer-credits {
+  color: #819198; }
