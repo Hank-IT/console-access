@@ -148,11 +148,10 @@ class ConsoleAccess implements ConsoleAccessInterface
      * @param $param string
      * @param $hidden boolean
      * @param $escape boolean
-     * @param $delimiter string
      *
      * @return $this
      */
-    public function param($param, $hidden = false, $escape = true, $delimiter = ' ')
+    public function param($param, $hidden = false, $escape = true)
     {
         if ($escape) {
             // prevent multiple parameters from being
@@ -162,8 +161,7 @@ class ConsoleAccess implements ConsoleAccessInterface
 
         $this->params[] = [
             'param' => $param,
-            'hidden' => $hidden,
-            'delimiter' => $delimiter,
+            'hidden' => $hidden
         ];
 
         return $this;
@@ -184,7 +182,7 @@ class ConsoleAccess implements ConsoleAccessInterface
         }
 
         if (! is_null($this->pre)) {
-            call_user_func($this->pre, $this->bin);
+            call_user_func($this->pre, $this->getCommand());
         }
 
         $this->buildCommand();
@@ -196,7 +194,7 @@ class ConsoleAccess implements ConsoleAccessInterface
         $this->end = time();
 
         if (! is_null($this->post)) {
-            call_user_func_array($this->post, [$this->bin, $this->getExitStatus(), $this->start, $this->end, $this->getDuration()]);
+            call_user_func_array($this->post, [$this->getCommand(), $this->getExitStatus(), $this->start, $this->end, $this->getDuration()]);
         }
     }
 
@@ -311,6 +309,9 @@ class ConsoleAccess implements ConsoleAccessInterface
         return $this->buildCommandWithoutHiddenParams();
     }
 
+    /**
+     * Build the command for execution.
+     */
     private function buildCommand()
     {
         // prepend sudo if enabled
@@ -321,10 +322,15 @@ class ConsoleAccess implements ConsoleAccessInterface
         }
 
         foreach ($this->params as $param) {
-            $this->command .= ' ' . $param['param'] . $param['delimiter'];
+            $this->command .= ' ' . $param['param'];
         }
     }
 
+    /**
+     * Build the command without hidden params.
+     *
+     * @return string
+     */
     private function buildCommandWithoutHiddenParams()
     {
         // prepend sudo if enabled
@@ -336,9 +342,9 @@ class ConsoleAccess implements ConsoleAccessInterface
 
         foreach ($this->params as $param) {
             if ($param['hidden']) {
-                $command .= ' hidden' . $param['delimiter'];
+                $command .= ' hidden';
             } else {
-                $command .= ' ' . $param['param'] . $param['delimiter'];
+                $command .= ' ' . $param['param'];
             }
         }
 
