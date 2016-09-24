@@ -9,31 +9,29 @@
  * PHP version 5.6
  *
  * @category Console
- * @package  MrCrankHank\ConsoleAccess\Adapters
  * @author   Alexander Hank <mail@alexander-hank.de>
  * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
  * @link     null
  */
-
 namespace MrCrankHank\ConsoleAccess\Adapters;
 
 use MrCrankHank\ConsoleAccess\Interfaces\AdapterInterface;
 use Closure;
 
 /**
- * Class DummyAdapter
+ * Class DummyAdapter.
  *
  * PHP version 5.6
  *
  * @category Console
- * @package  MrCrankHank\ConsoleAccess\Adapters
  * @author   Alexander Hank <mail@alexander-hank.de>
  * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
  * @link     null
  */
-class DummyAdapter implements AdapterInterface {
+class DummyAdapter implements AdapterInterface
+{
     /**
-     * Dummy method
+     * Dummy method.
      *
      * @param              $command
      * @param Closure|null $live
@@ -41,26 +39,24 @@ class DummyAdapter implements AdapterInterface {
      */
     public function run($command, Closure $live = null)
     {
-        return null;
     }
 
     /**
-     * Dummy method
+     * Dummy method.
      *
      * @return null
      */
     public function getOutput()
     {
-        return null;
     }
 
     /**
-     * Dummy method
+     * Dummy method.
      *
      * @return null
      */
     public function getExitStatus()
     {
-        return null;
     }
 }
+

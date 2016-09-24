@@ -7,12 +7,10 @@
  * PHP version 5.6
  *
  * @category Console
- * @package  MrCrankHank\ConsoleAccess
  * @author   Alexander Hank <mail@alexander-hank.de>
  * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
  * @link     null
  */
-
 namespace MrCrankHank\ConsoleAccess;
 
 use MrCrankHank\ConsoleAccess\Exceptions\MissingCommandException;
@@ -21,15 +19,15 @@ use MrCrankHank\ConsoleAccess\Interfaces\AdapterInterface;
 use Closure;
 
 /**
- * Class ConsoleAccess
+ * Class ConsoleAccess.
  *
  * @category Console
- * @package  MrCrankHank\ConsoleAccess
  * @author   Alexander Hank <mail@alexander-hank.de>
  * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
  * @link     null
  */
-class ConsoleAccess implements ConsoleAccessInterface {
+class ConsoleAccess implements ConsoleAccessInterface
+{
     /**
      * Adapter to execute the functions on.
      *
@@ -38,7 +36,7 @@ class ConsoleAccess implements ConsoleAccessInterface {
     private $adapter;
 
     /**
-     * Path to the sudo binary
+     * Path to the sudo binary.
      *
      * @var
      */
@@ -46,7 +44,7 @@ class ConsoleAccess implements ConsoleAccessInterface {
 
     /**
      * Store closure which will be
-     * executed before the command
+     * executed before the command.
      *
      * @var
      */
@@ -54,14 +52,14 @@ class ConsoleAccess implements ConsoleAccessInterface {
 
     /**
      * Store closure which will be
-     * executed after the command
+     * executed after the command.
      *
      * @var
      */
     private $post;
 
     /**
-     * Save the params
+     * Save the params.
      *
      * @var array
      */
@@ -76,18 +74,25 @@ class ConsoleAccess implements ConsoleAccessInterface {
     private $bin;
 
     /**
-     * Unix timestamp of the start
-     * of the command exec
+     * Full command.
      *
-     * @var integer
+     * @var
+     */
+    private $command;
+
+    /**
+     * Unix timestamp of the start
+     * of the command exec.
+     *
+     * @var int
      */
     private $start;
 
     /**
      * Unix timestamp of the end
-     * of the command exec
+     * of the command exec.
      *
-     * @var integer
+     * @var int
      */
     private $end;
 
@@ -117,7 +122,7 @@ class ConsoleAccess implements ConsoleAccessInterface {
     /**
      * Give a bin to be executed.
      * You may append parameters using
-     * the param() method
+     * the param() method.
      *
      * @param $bin
      * @param $escape boolean
@@ -138,14 +143,15 @@ class ConsoleAccess implements ConsoleAccessInterface {
     }
 
     /**
-     * Append parameters
+     * Append parameters.
      *
-     * @param $param
+     * @param $param string
+     * @param $hidden boolean
      * @param $escape boolean
      *
      * @return $this
      */
-    public function param($param, $escape = true)
+    public function param($param, $hidden = false, $escape = true)
     {
         if ($escape) {
             // prevent multiple parameters from being
@@ -153,7 +159,10 @@ class ConsoleAccess implements ConsoleAccessInterface {
             $param = escapeshellarg($param);
         }
 
-        $this->params[] = $param;
+        $this->params[] = [
+            'param' => $param,
+            'hidden' => $hidden
+        ];
 
         return $this;
     }
@@ -172,37 +181,26 @@ class ConsoleAccess implements ConsoleAccessInterface {
             throw new MissingCommandException('Command is missing');
         }
 
-        if (!empty($this->params)) {
-            // add whitespace to the end
-            $this->bin .= ' ';
+        if (! is_null($this->pre)) {
+            call_user_func($this->pre, $this->getCommand());
         }
 
-        // prepend sudo if enabled
-        if ($this->sudo) {
-            $this->bin = $this->sudo . ' ' . $this->bin;
-        }
-
-        // add parameters to command
-        $this->bin .= implode(' ', $this->params);
-
-        if (!is_null($this->pre)) {
-            call_user_func($this->pre, $this->bin);
-        }
+        $this->buildCommand();
 
         $this->start = time();
 
-        $this->adapter->run($this->bin, $live);
+        $this->adapter->run($this->command, $live);
 
         $this->end = time();
 
-        if (!is_null($this->post)) {
-            call_user_func_array($this->post, [$this->bin, $this->getExitStatus(), $this->start, $this->end, $this->getDuration()]);
+        if (! is_null($this->post)) {
+            call_user_func_array($this->post, [$this->getCommand(), $this->getExitStatus(), $this->start, $this->end, $this->getDuration()]);
         }
     }
 
     /**
      * Get full output of the
-     * executed command
+     * executed command.
      *
      * @return mixed
      */
@@ -212,7 +210,7 @@ class ConsoleAccess implements ConsoleAccessInterface {
     }
 
     /**
-     * Get exit status of the executed command
+     * Get exit status of the executed command.
      *
      * @return mixed
      */
@@ -270,9 +268,9 @@ class ConsoleAccess implements ConsoleAccessInterface {
     }
 
     /**
-     * Return start timestamp
+     * Return start timestamp.
      *
-     * @return integer
+     * @return int
      */
     public function getStart()
     {
@@ -280,9 +278,9 @@ class ConsoleAccess implements ConsoleAccessInterface {
     }
 
     /**
-     * Return end timestamp
+     * Return end timestamp.
      *
-     * @return integer
+     * @return int
      */
     public function getEnd()
     {
@@ -300,4 +298,57 @@ class ConsoleAccess implements ConsoleAccessInterface {
     {
         return $this->end - $this->start;
     }
+
+    /**
+     * Return the full command.
+     *
+     * @return mixed
+     */
+    public function getCommand()
+    {
+        return $this->buildCommandWithoutHiddenParams();
+    }
+
+    /**
+     * Build the command for execution.
+     */
+    private function buildCommand()
+    {
+        // prepend sudo if enabled
+        if ($this->sudo) {
+            $this->command = $this->sudo . ' ' . $this->bin;
+        } else {
+            $this->command = $this->bin;
+        }
+
+        foreach ($this->params as $param) {
+            $this->command .= ' ' . $param['param'];
+        }
+    }
+
+    /**
+     * Build the command without hidden params.
+     *
+     * @return string
+     */
+    private function buildCommandWithoutHiddenParams()
+    {
+        // prepend sudo if enabled
+        if ($this->sudo) {
+            $command = $this->sudo . ' ' . $this->bin;
+        } else {
+            $command = $this->bin;
+        }
+
+        foreach ($this->params as $param) {
+            if ($param['hidden']) {
+                $command .= ' hidden';
+            } else {
+                $command .= ' ' . $param['param'];
+            }
+        }
+
+        return $command;
+    }
 }
+

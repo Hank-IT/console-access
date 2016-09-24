@@ -7,21 +7,18 @@
  * PHP version 5.6
  *
  * @category Exception
- * @package  MrCrankHank\IetParser\Exceptions
  * @author   Alexander Hank <mail@alexander-hank.de>
  * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
  * @link     null
  */
-
 namespace MrCrankHank\ConsoleAccess\Exceptions;
 
 use Exception;
 
 /**
- * Class BaseException
+ * Class BaseException.
  *
  * @category Exception
- * @package  MrCrankHank\IetParser\Exceptions
  * @author   Alexander Hank <mail@alexander-hank.de>
  * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
  * @link     null
@@ -29,7 +26,7 @@ use Exception;
 class BaseException extends Exception
 {
     /**
-     * Generate full exception trace
+     * Generate full exception trace.
      *
      * @return string
      *
@@ -45,16 +42,17 @@ class BaseException extends Exception
         array_pop($trace); // remove call to this method
         array_pop($trace); // remove call to log_debug_result method
         $length = count($trace);
-        $result = array();
+        $result = [];
         for ($i = 0; $i < $length; $i++) {
             // replace '#someNum' with '$i)', set the right ordering
             $result[] = ($i + 1) . ')' . substr($trace[$i], strpos($trace[$i], ' '));
         }
+
         return "\t" . implode("\n\t", $result) . "\n\n";
     }
 
     /**
-     * Php's internal getTraceAsString function truncates the output
+     * Php's internal getTraceAsString function truncates the output.
      *
      * @param Exception $exception Exception of which the trace should be created
      *
@@ -64,21 +62,21 @@ class BaseException extends Exception
      */
     protected function getExceptionTraceAsString(Exception $exception)
     {
-        $rtn = "";
+        $rtn = '';
         $count = 0;
         foreach ($exception->getTrace() as $frame) {
-            $args = "";
+            $args = '';
             if (isset($frame['args'])) {
-                $args = array();
+                $args = [];
                 foreach ($frame['args'] as $arg) {
                     if (is_string($arg)) {
                         $args[] = "'" . $arg . "'";
                     } elseif (is_array($arg)) {
-                        $args[] = "Array";
+                        $args[] = 'Array';
                     } elseif (is_null($arg)) {
                         $args[] = 'NULL';
                     } elseif (is_bool($arg)) {
-                        $args[] = ($arg) ? "true" : "false";
+                        $args[] = ($arg) ? 'true' : 'false';
                     } elseif (is_object($arg)) {
                         $args[] = get_class($arg);
                     } elseif (is_resource($arg)) {
@@ -87,7 +85,7 @@ class BaseException extends Exception
                         $args[] = $arg;
                     }
                 }
-                $args = join(", ", $args);
+                $args = implode(', ', $args);
             }
             if (isset($frame['file'], $frame['line'])) {
                 $rtn .= sprintf("#%s %s(%s): %s(%s)\n", $count, $frame['file'], $frame['line'], $frame['function'], $args);
@@ -97,6 +95,8 @@ class BaseException extends Exception
                 $count++;
             }
         }
+
         return $rtn;
     }
 }
+
