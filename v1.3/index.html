@@ -141,7 +141,6 @@ echo $console->getOutput();
 echo $console->getExitStatus();</code></pre>
 
     <h2><a class="anchor" href="#live" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fetching live output</h2>
-    <p>For long running commands, the getOutput() method might show unexpected behaviour. In these cases you should capture the live output of the command.</p>
     <pre><code>// create a new adapter
 $adapter = new LocalAdapter;
 
@@ -180,8 +179,26 @@ echo $console->getOutput();
 // fetch exit status
 echo $console->getExitStatus();</code></pre>
 
+    <h2><a class="anchor" href="#hidden" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hidden parameters</h2>
+    <p>If you want to pass a password or other secrets to a command, you should set the second parameter to true. Otherwise the  getCommand() function will output the data.</p>
+    <pre><code>// create a new adapter
+$adapter = new LocalAdapter;
+
+// create a new console
+$console = new ConsoleAccess($adapter);
+
+// execute an command
+// with hidden parameter
+$console->bin('command')->param('secret-parameter', true)->exec();
+
+// fetch output
+echo $console->getOutput();
+
+// fetch exit status
+echo $console->getExitStatus();</code></pre>
+
     <h2><a class="anchor" href="#escape" aria-hidden="true"><span class="octicon octicon-link"></span></a>Escaping</h2>
-    <p>Commands are escaped by default using escapeshellcmd() and parameters by using escapeshellarg(). If you want to pass a command without escaping you may pass false as second parameter.</p>
+    <p>Commands are escaped by default using escapeshellcmd() and parameters by using escapeshellarg(). If you want to pass a command without escaping you may pass false as third parameter.</p>
     <pre><code>// create a new adapter
 $adapter = new LocalAdapter;
 
@@ -190,11 +207,11 @@ $console = new ConsoleAccess($adapter);
 
 // execute the command an
 // unescaped command
-$console->bin('pwd', false)->exec();
+$console->bin('pwd', false, false)->exec();
 
 // execute an escaped command
 // with unescaped parameter
-$console->bin('pwd')->param('-l', false)->exec();
+$console->bin('pwd')->param('-l', false, false)->exec();
 
 // fetch output
 echo $console->getOutput();
