@@ -198,7 +198,7 @@ echo $console->getOutput();
 echo $console->getExitStatus();</code></pre>
 
     <h2><a class="anchor" href="#escape" aria-hidden="true"><span class="octicon octicon-link"></span></a>Escaping</h2>
-    <p>Commands are escaped by default using escapeshellcmd() and parameters by using escapeshellarg(). If you want to pass a command without escaping you may pass false as third parameter.</p>
+    <p>Commands are escaped by default using escapeshellcmd() and parameters by using escapeshellarg(). If you want to pass a command without escaping you may pass false as second or third (depending on the function bin()/param()) parameter.</p>
     <pre><code>// create a new adapter
 $adapter = new LocalAdapter;
 
@@ -207,7 +207,7 @@ $console = new ConsoleAccess($adapter);
 
 // execute the command an
 // unescaped command
-$console->bin('pwd', false, false)->exec();
+$console->bin('pwd', false)->exec();
 
 // execute an escaped command
 // with unescaped parameter
