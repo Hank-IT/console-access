@@ -33,14 +33,14 @@ class ConsoleAccess implements ConsoleAccessInterface
      *
      * @var AdapterInterface
      */
-    private $adapter;
+    protected $adapter;
 
     /**
      * Path to the sudo binary.
      *
      * @var
      */
-    private $sudo = false;
+    protected $sudo = false;
 
     /**
      * Store closure which will be
@@ -48,7 +48,7 @@ class ConsoleAccess implements ConsoleAccessInterface
      *
      * @var
      */
-    private $pre;
+    protected $pre;
 
     /**
      * Store closure which will be
@@ -56,14 +56,14 @@ class ConsoleAccess implements ConsoleAccessInterface
      *
      * @var
      */
-    private $post;
+    protected $post;
 
     /**
      * Save the params.
      *
      * @var array
      */
-    private $params = [];
+    protected $params = [];
 
     /**
      * Path to the bin, which
@@ -71,14 +71,14 @@ class ConsoleAccess implements ConsoleAccessInterface
      *
      * @var string
      */
-    private $bin;
+    protected $bin;
 
     /**
      * Full command.
      *
      * @var
      */
-    private $command;
+    protected $command;
 
     /**
      * Unix timestamp of the start
@@ -86,7 +86,7 @@ class ConsoleAccess implements ConsoleAccessInterface
      *
      * @var int
      */
-    private $start;
+    protected $start;
 
     /**
      * Unix timestamp of the end
@@ -94,7 +94,7 @@ class ConsoleAccess implements ConsoleAccessInterface
      *
      * @var int
      */
-    private $end;
+    protected $end;
 
     /**
      * ConsoleAccess constructor.
@@ -146,12 +146,11 @@ class ConsoleAccess implements ConsoleAccessInterface
      * Append parameters.
      *
      * @param $param string
-     * @param $hidden boolean
      * @param $escape boolean
      *
      * @return $this
      */
-    public function param($param, $hidden = false, $escape = true)
+    public function param($param, $escape = true)
     {
         if ($escape) {
             // prevent multiple parameters from being
@@ -161,7 +160,31 @@ class ConsoleAccess implements ConsoleAccessInterface
 
         $this->params[] = [
             'param' => $param,
-            'hidden' => $hidden,
+            'hidden' => false,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * Append parameters.
+     *
+     * @param $param string
+     * @param $escape boolean
+     *
+     * @return $this
+     */
+    public function hiddenParam($param, $escape = true)
+    {
+        if ($escape) {
+            // prevent multiple parameters from being
+            // passed by escaping the value
+            $param = escapeshellarg($param);
+        }
+
+        $this->params[] = [
+            'param' => $param,
+            'hidden' => true,
         ];
 
         return $this;
@@ -312,7 +335,7 @@ class ConsoleAccess implements ConsoleAccessInterface
     /**
      * Build the command for execution.
      */
-    private function buildCommand()
+    protected function buildCommand()
     {
         // prepend sudo if enabled
         if ($this->sudo) {
@@ -331,7 +354,7 @@ class ConsoleAccess implements ConsoleAccessInterface
      *
      * @return string
      */
-    private function buildCommandWithoutHiddenParams()
+    protected function buildCommandWithoutHiddenParams()
     {
         // prepend sudo if enabled
         if ($this->sudo) {

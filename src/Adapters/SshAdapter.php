@@ -36,22 +36,22 @@ class SshAdapter implements AdapterInterface
     /**
      * @var SSH2
      */
-    private $connection;
+    protected $connection;
 
     /**
      * @var string
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string
      */
-    private $publicKey;
+    protected $publicKey;
 
     /**
      * @var string
      */
-    private $output;
+    protected $output;
 
     /**
      * SshAdapter constructor.
@@ -78,16 +78,18 @@ class SshAdapter implements AdapterInterface
     /**
      * Login via password.
      *
+     * @throws ConnectionNotPossibleException
      * @param $password
      */
     public function loginPassword($password)
     {
-        $this->_login($password);
+        $this->login($password);
     }
 
     /**
      * Login via private key.
      *
+     * @throws ConnectionNotPossibleException
      * @param      $key
      * @param null $password
      */
@@ -105,7 +107,7 @@ class SshAdapter implements AdapterInterface
             $crypt->loadKey($key);
         }
 
-        $this->_login($crypt);
+        $this->login($crypt);
     }
 
     /**
@@ -148,7 +150,7 @@ class SshAdapter implements AdapterInterface
      *
      * @param $auth
      */
-    private function _login($auth)
+    protected function login($auth)
     {
         if (! $this->connection->login($this->username, $auth)) {
             throw new ConnectionNotPossibleException('Not connected');

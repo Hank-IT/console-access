@@ -35,7 +35,7 @@ class DummyAdapter implements AdapterInterface
      *
      * @param              $command
      * @param Closure|null $live
-     * @return null
+     * @return void
      */
     public function run($command, Closure $live = null)
     {
@@ -44,7 +44,7 @@ class DummyAdapter implements AdapterInterface
     /**
      * Dummy method.
      *
-     * @return null
+     * @return void
      */
     public function getOutput()
     {
@@ -53,7 +53,7 @@ class DummyAdapter implements AdapterInterface
     /**
      * Dummy method.
      *
-     * @return null
+     * @return void
      */
     public function getExitStatus()
     {

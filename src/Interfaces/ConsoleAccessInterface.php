@@ -12,7 +12,9 @@ interface ConsoleAccessInterface
 
     public function bin($bin, $escape = true);
 
-    public function param($param, $hidden = false, $escape = true);
+    public function param($param, $escape = true);
+
+    public function hiddenParam($param, $escape = true);
 
     public function exec(Closure $live = null);
 
