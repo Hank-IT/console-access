@@ -144,6 +144,16 @@ class SshAdapter implements AdapterInterface
     }
 
     /**
+     * Return the host's public key.
+     *
+     * @return mixed
+     */
+    public function getPublicKey()
+    {
+        return $this->connection->getServerPublicHostKey();
+    }
+
+    /**
      * Login to the server.
      *
      * @throws ConnectionNotPossibleException
