@@ -10,7 +10,7 @@
 
 <section class="page-header">
     <h1 class="project-name">console-access</h1>
-    <h2 class="project-tagline">Version 2.0</h2>
+    <h2 class="project-tagline">Version 2.1</h2>
     <h2 class="project-tagline">A library written in php, which abstracts the access to a console via adapters.</h2>
     <a href="https://github.com/MrCrankHank/console-access" class="btn">View on GitHub</a>
     <a href="https://github.com/MrCrankHank/console-access/archive/1.3.zip" class="btn">Download .zip</a>
@@ -77,6 +77,12 @@ $adapter = new SshAdapter('127.0.0.1', 'user', 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB
 // login to the remote server
 $adapter->loginPassword('password');
 
+// retrieve public key
+$adapter->getServerPublicHostKey();
+
+// verify if host is available
+$adapter->available();
+
 // create a new console
 $console = new ConsoleAccess($adapter);
 
@@ -97,7 +103,6 @@ echo $console->getExitStatus();</code></pre>
  * <strong>key</strong> of the host (in debian: "/etc/ssh/ssh_host_rsa_key.pub")
  */
 $adapter = new SshAdapter('127.0.0.1', 'user', 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZCcmN09Wa62slAy2ASo+/TVlYIb4GufKAV02hjrYhzxCkOdxJOqLmfjkenr+hKAtBf4bHvVFZGI3jd12rLSgMTG7h53Zumv5r4oIl+SBxB/+U2PEk8X5XEDRvR1eP5+3fdAB8w/Ds4KI7HGMG0IkSvP8Gqlsq6AE/t6rQI8ac52bWHkmBHa7Ebt3JIKbi6E0HdCq0Qy35GadVCaBJRW49oqxYL1hVrcifB4DscqarU35+zDO6UYPdiFgfgfIFTIcB9nPAwiOmHkg+4uJbonZyjGSr+phYj0BIQ4JIeuSjxOjkfZteC6ePuqjwZNUZVA+SMlm3+ahGSDq3sDwOhhK7');
-
 /*
  * login to the remote server
  * You can provide a path or the
@@ -108,6 +113,12 @@ $adapter = new SshAdapter('127.0.0.1', 'user', 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB
  * after the key path/content
  */
 $adapter->loginKey(file_get_contents('~/.ssh/id_rsa');
+
+// retrieve public key
+$adapter->getServerPublicHostKey();
+
+// verify if host is available
+$adapter->available();
 
 // create a new console
 $console = new ConsoleAccess($adapter);
