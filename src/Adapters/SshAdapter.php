@@ -56,8 +56,6 @@ class SshAdapter implements AdapterInterface
     /**
      * SshAdapter constructor.
      *
-     * @throws PublicKeyMismatchException
-     *
      * @param $host
      * @param $username
      * @param $publicKey
@@ -65,10 +63,6 @@ class SshAdapter implements AdapterInterface
     public function __construct($host, $username, $publicKey)
     {
         $this->connection = new SSH2($host);
-
-        if ($this->connection->getServerPublicHostKey() !== $publicKey) {
-            throw new PublicKeyMismatchException('Public key mismatch');
-        }
 
         $this->username = $username;
 
@@ -99,10 +93,15 @@ class SshAdapter implements AdapterInterface
      * Login via password.
      *
      * @throws ConnectionNotPossibleException
+     * @throws PublicKeyMismatchException
      * @param $password
      */
     public function loginPassword($password)
     {
+        if ($this->getServerPublicHostKey() !== $this->publicKey) {
+            throw new PublicKeyMismatchException('Public key mismatch');
+        }
+
         $this->login($password);
     }
 
@@ -110,11 +109,16 @@ class SshAdapter implements AdapterInterface
      * Login via private key.
      *
      * @throws ConnectionNotPossibleException
+     * @throws PublicKeyMismatchException
      * @param      $key
      * @param null $password
      */
     public function loginKey($key, $password = null)
     {
+        if ($this->getServerPublicHostKey() !== $this->publicKey) {
+            throw new PublicKeyMismatchException('Public key mismatch');
+        }
+
         $crypt = new RSA;
 
         if (! is_null($password)) {
