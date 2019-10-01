@@ -76,6 +76,26 @@ class SshAdapter implements AdapterInterface
     }
 
     /**
+     * Check if the remote server is available.
+     *
+     * @return bool
+     */
+    public function available()
+    {
+        return $this->connection->_connect();
+    }
+
+    /**
+     * Get the server's public key.
+     *
+     * @return mixed
+     */
+    public function getServerPublicHostKey()
+    {
+        return $this->connection->getServerPublicHostKey();
+    }
+
+    /**
      * Login via password.
      *
      * @throws ConnectionNotPossibleException
