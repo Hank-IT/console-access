@@ -8,7 +8,7 @@
 This library abstracts the access to a console through adapters. It provides a local and ssh adapter out of the box.
 
 ### Examples & documentation
-https://mrcrankhank.github.io/console-access/
+https://hank-it.github.io/console-access/
 
 ### Packagist
 https://packagist.org/packages/mrcrankhank/console-access
