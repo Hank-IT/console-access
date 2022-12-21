@@ -3,6 +3,7 @@
 namespace HankIT\ConsoleAccess\Adapters\SshAdapter;
 
 use Closure;
+use HankIT\ConsoleAccess\Adapters\Contract\Credential;
 use HankIT\ConsoleAccess\Exceptions\ConnectionNotPossibleException;
 use HankIT\ConsoleAccess\Exceptions\PublicKeyMismatchException;
 use HankIT\ConsoleAccess\Interfaces\AdapterInterface;
@@ -14,19 +15,25 @@ class Adapter implements AdapterInterface
 
     protected string $username;
 
+    protected Credential  $credential;
+
     protected ?string $publicKey;
 
     protected ?string $output = null;
 
+    protected bool $initialLogin = false;
+
     public function __construct(
         SSH2 $connection,
         string $username,
+        Credential $credential,
         ?string $publicKey = null
-    )
-    {
+    ){
         $this->connection = $connection;
 
         $this->username = $username;
+
+        $this->credential = $credential;
 
         $this->publicKey = $publicKey;
     }
@@ -41,26 +48,18 @@ class Adapter implements AdapterInterface
         return $this->connection->getServerPublicHostKey();
     }
 
-    public function loginPassword(string $password): void
-    {
-        if (! is_null($this->publicKey) && $this->getServerPublicHostKey() !== $this->publicKey) {
-            throw new PublicKeyMismatchException('Public key mismatch');
-        }
-
-        $this->login($password);
-    }
-
-    public function loginKey(Key $key): void
-    {
-        if (! is_null($this->publicKey) && $this->getServerPublicHostKey() !== $this->publicKey) {
-            throw new PublicKeyMismatchException('Public key mismatch');
-        }
-
-        $this->login($key->get());
-    }
-
     public function run(string $command, Closure $live = null): void
     {
+        if (! $this->initialLogin) {
+            $this->login();
+
+            $this->initialLogin = true;
+        }
+
+        if (! $this->connection->ping()) {
+            throw new ConnectionNotPossibleException('Ping failed');
+        }
+
         $this->output = $this->connection->exec($command, $live);
     }
 
@@ -73,10 +72,14 @@ class Adapter implements AdapterInterface
     {
         return $this->connection->getExitStatus();
     }
-    
-    protected function login($auth): void
+
+    protected function login(): void
     {
-        if (! $this->connection->login($this->username, $auth)) {
+        if (! is_null($this->publicKey) && $this->getServerPublicHostKey() !== $this->publicKey) {
+            throw new PublicKeyMismatchException('Public key mismatch');
+        }
+
+        if (! $this->connection->login($this->username, $this->credential->get())) {
             throw new ConnectionNotPossibleException('Not connected');
         }
     }

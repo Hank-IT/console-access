@@ -2,10 +2,11 @@
 
 namespace HankIT\ConsoleAccess\Adapters\SshAdapter;
 
+use HankIT\ConsoleAccess\Adapters\Contract\Credential;
 use phpseclib3\Crypt\Common\AsymmetricKey;
 use phpseclib3\Crypt\PublicKeyLoader;
 
-class Key
+class Key implements Credential
 {
     protected AsymmetricKey $key;
 
