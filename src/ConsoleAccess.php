@@ -1,139 +1,46 @@
 <?php
 
-/**
- * This file contains the ConsoleAccess class.
- * It exposes an api to execute a console command via an adapter.
- *
- * PHP version 5.6
- *
- * @category Console
- * @author   Alexander Hank <mail@alexander-hank.de>
- * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
- * @link     null
- */
-namespace MrCrankHank\ConsoleAccess;
+namespace HankIT\ConsoleAccess;
 
-use MrCrankHank\ConsoleAccess\Exceptions\MissingCommandException;
-use MrCrankHank\ConsoleAccess\Interfaces\ConsoleAccessInterface;
-use MrCrankHank\ConsoleAccess\Interfaces\AdapterInterface;
+use HankIT\ConsoleAccess\Exceptions\MissingCommandException;
+use HankIT\ConsoleAccess\Interfaces\AdapterInterface;
 use Closure;
 
-/**
- * Class ConsoleAccess.
- *
- * @category Console
- * @author   Alexander Hank <mail@alexander-hank.de>
- * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
- * @link     null
- */
-class ConsoleAccess implements ConsoleAccessInterface
+class ConsoleAccess
 {
-    /**
-     * Adapter to execute the functions on.
-     *
-     * @var AdapterInterface
-     */
-    protected $adapter;
+    protected AdapterInterface $adapter;
 
-    /**
-     * Path to the sudo binary.
-     *
-     * @var
-     */
-    protected $sudo = false;
+    protected ?string $sudo = null;
 
-    /**
-     * Store closure which will be
-     * executed before the command.
-     *
-     * @var
-     */
-    protected $pre;
+    protected ?Closure $pre = null;
 
-    /**
-     * Store closure which will be
-     * executed after the command.
-     *
-     * @var
-     */
-    protected $post;
+    protected ?Closure $post = null;
 
-    /**
-     * Save the params.
-     *
-     * @var array
-     */
-    protected $params = [];
+    protected array $params = [];
 
-    /**
-     * Path to the bin, which
-     * should be executed.
-     *
-     * @var string
-     */
-    protected $bin;
+    protected ?string $bin = null;
 
-    /**
-     * Full command.
-     *
-     * @var
-     */
-    protected $command;
+    protected int $start;
 
-    /**
-     * Unix timestamp of the start
-     * of the command exec.
-     *
-     * @var int
-     */
-    protected $start;
+    protected int $end;
 
-    /**
-     * Unix timestamp of the end
-     * of the command exec.
-     *
-     * @var int
-     */
-    protected $end;
-
-    /**
-     * ConsoleAccess constructor.
-     *
-     * @param AdapterInterface $adapter
-     */
     public function __construct(AdapterInterface $adapter)
     {
         $this->adapter = $adapter;
     }
 
-    /**
-     * Prepend sudo to the command.
-     *
-     * @param string $sudo Path to the sudo binary
-     * @return $this
-     */
-    public function sudo($sudo = '/usr/bin/sudo')
+    public function sudo(string $sudo = '/usr/bin/sudo')
     {
         $this->sudo = $sudo;
 
         return $this;
     }
 
-    /**
-     * Give a bin to be executed.
-     * You may append parameters using
-     * the param() method.
-     *
-     * @param $bin
-     * @param $escape boolean
-     *
-     * @return $this
-     */
-    public function bin($bin, $escape = true)
+    public function bin(string $bin, bool $escape = true)
     {
         if ($escape) {
             // prevent multiple commands from
-            // being passed by escapine the value
+            // being passed by escaping the value
             $bin = escapeshellcmd($bin);
         }
 
@@ -142,15 +49,7 @@ class ConsoleAccess implements ConsoleAccessInterface
         return $this;
     }
 
-    /**
-     * Append parameters.
-     *
-     * @param $param string
-     * @param $escape boolean
-     *
-     * @return $this
-     */
-    public function param($param, $escape = true)
+    public function param(string $param, bool $escape = true)
     {
         if ($escape) {
             // prevent multiple parameters from being
@@ -166,15 +65,7 @@ class ConsoleAccess implements ConsoleAccessInterface
         return $this;
     }
 
-    /**
-     * Append parameters.
-     *
-     * @param $param string
-     * @param $escape boolean
-     *
-     * @return $this
-     */
-    public function hiddenParam($param, $escape = true)
+    public function hiddenParam(string $param, bool $escape = true)
     {
         if ($escape) {
             // prevent multiple parameters from being
@@ -190,14 +81,6 @@ class ConsoleAccess implements ConsoleAccessInterface
         return $this;
     }
 
-    /**
-     * Exec the command on the adapter.
-     * You can pass a closure to capture
-     * the live output.
-     *
-     * @param Closure|null $live
-     * @throws MissingCommandException
-     */
     public function exec(Closure $live = null)
     {
         if (is_null($this->bin)) {
@@ -208,11 +91,9 @@ class ConsoleAccess implements ConsoleAccessInterface
             call_user_func($this->pre, $this->getCommand());
         }
 
-        $this->buildCommand();
-
         $this->start = time();
 
-        $this->adapter->run($this->command, $live);
+        $this->adapter->run($this->buildCommand(), $live);
 
         $this->end = time();
 
@@ -221,154 +102,84 @@ class ConsoleAccess implements ConsoleAccessInterface
         }
     }
 
-    /**
-     * Get full output of the
-     * executed command.
-     *
-     * @return mixed
-     */
-    public function getOutput()
+    public function getOutput(): ?string
     {
         return $this->adapter->getOutput();
     }
 
-    /**
-     * Get exit status of the executed command.
-     *
-     * @return mixed
-     */
-    public function getExitStatus()
+    public function getExitStatus(): int
     {
         return $this->adapter->getExitStatus();
     }
 
-    /**
-     * Return the given command.
-     *
-     * @return mixed
-     */
-    public function getBin()
+    public function getBin(): string
     {
         return $this->bin;
     }
 
-    /**
-     * Set a function which will be executed directly
-     * before the command is executed. You can write
-     * something into an audit log for example.
-     * The function will receive the command as first
-     * parameter.
-     *
-     * @param Closure $function
-     */
-    public function setPreExec(Closure $function)
+    public function setPreExec(Closure $function): self
     {
         $this->pre = $function;
+
+        return $this;
     }
 
-    /**
-     * Set a function which will be executed directly
-     * after the command was executed. You can write
-     * something into an audit log for example.
-     * The function will receive the command as first
-     * parameter and the exit status as second one.
-     *
-     * @param Closure $function
-     */
-    public function setPostExec(Closure $function)
+    public function setPostExec(Closure $function): self
     {
         $this->post = $function;
+
+        return $this;
     }
 
-    /**
-     * Return the parameters.
-     *
-     * @return array
-     */
-    public function getParams()
+    public function getParams(): array
     {
         return $this->params;
     }
 
-    /**
-     * Return start timestamp.
-     *
-     * @return int
-     */
-    public function getStart()
+    public function getStart(): int
     {
         return $this->start;
     }
 
-    /**
-     * Return end timestamp.
-     *
-     * @return int
-     */
-    public function getEnd()
+    public function getEnd(): int
     {
         return $this->end;
     }
 
-    /**
-     * Return the duration of command exec.
-     *
-     * For simple commands, this might return 0.
-     *
-     * @return int
-     */
-    public function getDuration()
+    public function getDuration(): int
     {
         return $this->end - $this->start;
     }
 
-    /**
-     * Return the full command.
-     *
-     * @return mixed
-     */
-    public function getCommand()
+    public function getCommand(): string
     {
         return $this->buildCommandWithoutHiddenParams();
     }
 
-    /**
-     * Build the command for execution.
-     */
-    protected function buildCommand()
+    protected function buildCommand(): string
     {
-        // prepend sudo if enabled
-        if ($this->sudo) {
-            $this->command = $this->sudo . ' ' . $this->bin;
-        } else {
-            $this->command = $this->bin;
-        }
+        // Prepend sudo if enabled
+        $command = $this->sudo
+            ?  $this->sudo . ' ' . $this->bin
+            :  $this->bin;
 
         foreach ($this->params as $param) {
-            $this->command .= ' ' . $param['param'];
+            $command .= ' ' . $param['param'];
         }
+
+        return $command;
     }
 
-    /**
-     * Build the command without hidden params.
-     *
-     * @return string
-     */
-    protected function buildCommandWithoutHiddenParams()
+    protected function buildCommandWithoutHiddenParams(): string
     {
-        // prepend sudo if enabled
-        if ($this->sudo) {
-            $command = $this->sudo . ' ' . $this->bin;
-        } else {
-            $command = $this->bin;
-        }
+        $command = $this->sudo
+            ? $this->sudo . ' ' . $this->bin
+            : $this->bin;
 
         foreach ($this->params as $param) {
-            if ($param['hidden']) {
-                $command .= ' hidden';
-            } else {
-                $command .= ' ' . $param['param'];
-            }
+            $command .= $param['hidden']
+                ? ' hidden'
+                : ' ' . $param['param'];
         }
 
         return $command;

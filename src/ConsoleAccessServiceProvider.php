@@ -1,30 +1,11 @@
 <?php
 
-/**
- * This file contains the ConsoleAccessServiceProvider class
- * It makes the functionality available to laravel.
- *
- * PHP version 5.6
- *
- * @category Console
- * @author   Alexander Hank <mail@alexander-hank.de>
- * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
- * @link     null
- */
-namespace MrCrankHank\ConsoleAccess;
+namespace HankIT\ConsoleAccess;
 
+use HankIT\ConsoleAccess\Adapters\LocalAdapter;
+use HankIT\ConsoleAccess\Adapters\SshAdapter\Adapter;
 use Illuminate\Support\ServiceProvider;
-use MrCrankHank\ConsoleAccess\Adapters\LocalAdapter;
-use MrCrankHank\ConsoleAccess\Adapters\SshAdapter;
 
-/**
- * Class ConsoleAccessServiceProvider.
- *
- * @category Console
- * @author   Alexander Hank <mail@alexander-hank.de>
- * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
- * @link     null
- */
 class ConsoleAccessServiceProvider extends ServiceProvider
 {
     /**
@@ -52,8 +33,8 @@ class ConsoleAccessServiceProvider extends ServiceProvider
             return new LocalAdapter;
         });
 
-        $this->app->bind(SshAdapter::class, function ($app, $parameters) {
-            return new SshAdapter($parameters['host'], $parameters['user'], $parameters['publicKey']);
+        $this->app->bind(Adapter::class, function ($app, $parameters) {
+            return new Adapter($parameters['host'], $parameters['user'], $parameters['publicKey']);
         });
     }
 }

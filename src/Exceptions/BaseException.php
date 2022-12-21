@@ -1,28 +1,9 @@
 <?php
 
-/**
- * This file contains the BaseException class.
- * All exceptions extend it.
- *
- * PHP version 5.6
- *
- * @category Exception
- * @author   Alexander Hank <mail@alexander-hank.de>
- * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
- * @link     null
- */
-namespace MrCrankHank\ConsoleAccess\Exceptions;
+namespace HankIT\ConsoleAccess\Exceptions;
 
 use Exception;
 
-/**
- * Class BaseException.
- *
- * @category Exception
- * @author   Alexander Hank <mail@alexander-hank.de>
- * @license  Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0.txt
- * @link     null
- */
 class BaseException extends Exception
 {
     /**

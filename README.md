@@ -11,10 +11,10 @@ This library abstracts the access to a console through adapters. It provides a l
 https://hank-it.github.io/console-access/
 
 ### Packagist
-https://packagist.org/packages/mrcrankhank/console-access
+https://packagist.org/packages/hankit/console-access
 
 ### Testing
-Right now, this projekt does not contain any tests.
+phpunit
 
 ### Links
 * http://phpseclib.sourceforge.net/

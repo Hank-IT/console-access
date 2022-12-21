@@ -1,14 +1,14 @@
 <?php
 
-namespace MrCrankHank\ConsoleAccess\Interfaces;
+namespace HankIT\ConsoleAccess\Interfaces;
 
 use Closure;
 
 interface AdapterInterface
 {
-    public function run($command, Closure $live = null);
+    public function run(string $command, Closure $live = null): void;
 
-    public function getOutput();
+    public function getOutput(): ?string;
 
-    public function getExitStatus();
+    public function getExitStatus(): int;
 }

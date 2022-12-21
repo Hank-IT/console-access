@@ -1,20 +1,31 @@
 {
-    "name": "mrcrankhank/console-access",
+    "name": "hankit/console-access",
     "type": "library",
     "description": "This library abstracts the access to a console through adapters.",
     "license": "Apache-2.0",
     "authors": [
         {
-            "name": "MrCrankHank",
-            "email": "mail@alexander-hank.de"
+            "name": "Alexander Hank",
+            "email": "mail@hank-it.com"
         }
     ],
     "require": {
-        "phpseclib/phpseclib": "^2.0"
+        "php": ">=7.4",
+        "phpseclib/phpseclib": "^3.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.5",
+        "phpunit/phpunit": "9.5",
+        "fakerphp/faker": "^1.20"
     },
     "autoload": {
         "psr-4": {
-            "MrCrankHank\\ConsoleAccess\\": "src"
+            "HankIT\\ConsoleAccess\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
         }
     }
 }
