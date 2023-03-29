@@ -100,6 +100,8 @@ class ConsoleAccess
         if (! is_null($this->post)) {
             call_user_func_array($this->post, [$this->getCommand(), $this->getExitStatus(), $this->start, $this->end, $this->getDuration()]);
         }
+
+        $this->params = [];
     }
 
     public function getOutput(): ?string
